@@ -29,7 +29,7 @@
         android:layout_marginBottom="32dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="B1"
+            android:onClick="checkNet"
         android:text="حمل الان "
         android:layout_gravity="center"
         />

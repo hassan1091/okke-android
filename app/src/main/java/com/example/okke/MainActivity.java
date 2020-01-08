@@ -2,8 +2,11 @@ package com.example.okke;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,6 +34,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
     Button one, tow, three;
     DownloadManager downloadManager;
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +42,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         displayDownloadingPe();
         downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+        editText = findViewById(R.id.E1);
+
+        if (getUrlFromTwt() != null) {
+            editText.setText(getUrlFromTwt());
+        }
 
 
     }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && ((NetworkInfo) activeNetworkInfo).isConnected();
 
+    }
     public void displayDownloadingPe() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this
                 , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
     }
+
 
     public void displayDownloadVido(String finalUrl, String finalQuality, String finalSize) {
         //اوامر التحميل one
@@ -58,11 +74,19 @@ public class MainActivity extends AppCompatActivity {
         downloadManager.enqueue(downLoadRequest);
     }
 
-    public void B1(View view) {
+    public void checkNet (View view){
+        if (isNetworkAvailable()) {
+B1();
+        }else {
+Toast.makeText(this ,"ليس لديك انترنت ارجو المحاولة لاحقا ",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public void B1() {
 
         OkHttpClient Client = new OkHttpClient();
         //تعريف النص المدخل من المستخدم
-        final EditText editText = findViewById(R.id.E1);
+
         //رابط الاتصال ب API **ملاحظة يوجد رابط تجربيبي الان**
         final String url = "http://api.96.lt/twitter/?url=https://twitter.com/cybersec2030/status/1185280330086965248" + editText.getText().toString();
 
@@ -73,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         Client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Toast.makeText(MainActivity.this, "هناك خطأ في الرابط المعطى خطأ في response ", Toast.LENGTH_LONG).show();
+
                 e.printStackTrace();
             }
 
@@ -122,11 +146,8 @@ Quality: "1280x720"
 
                                 JSONObject jsonArray2 = new JSONObject(R1);
                                 int statusCode = jsonArray2.getInt("statusCode");
-                                if (statusCode != 200) {
-                                    Toast.makeText(MainActivity.this, statusCode + "هناك خطأ في الرابط المعطى ", Toast.LENGTH_LONG).show();
 
-                                }
-                                {
+
                                     Toast.makeText(MainActivity.this, statusCode + "   انتظر قليلا   ", Toast.LENGTH_LONG).show();
                                     JSONArray data = jsonArray2.getJSONArray("data");
 
@@ -191,7 +212,7 @@ Quality: "1280x720"
                                         }
                                     });
                                     //end the tow buttom
-                                }
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -206,5 +227,36 @@ Quality: "1280x720"
 
 
     }
+
+    public String getUrlFromTwt() {
+        String theTwtUrl = "";
+        String receivedText = null;
+//get the received intent
+        Intent receivedIntent = getIntent();
+        String receivedAction = receivedIntent.getAction();
+        //find out what we are dealing with
+        String receivedType = receivedIntent.getType();
+        //make sure it's an action and type we can handle
+        if (receivedAction.equals(Intent.ACTION_SEND)) {
+            //content is being shared
+            if (receivedType.startsWith("text/")) {
+                //handle sent text
+                receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
+                if (receivedText != null) {
+                    //set the text
+                    theTwtUrl = receivedText;
+
+
+                }
+
+            }
+        } else if (receivedAction.equals(Intent.ACTION_MAIN)) {
+            //app has been launched directly, not from share list
+
+        }
+
+        return theTwtUrl;
+    }
+
 
 }

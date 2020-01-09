@@ -33,6 +33,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
+    String  mJSONObject_twtId;
     Button one, tow, three;
     DownloadManager downloadManager;
     JSONObject jsonArray2,jsonObject0,jsonObject1,jsonObject2;
@@ -66,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void displayDownloadVido(String finalUrl, String finalQuality, String finalSize) {
+    public void displayDownloadVido(String finalUrl, String finalQuality, String finalSize,String TWTid) {
         //اوامر التحميل one
         DownloadManager.Request downLoadRequest = new DownloadManager.Request(Uri.parse(finalUrl));
         downLoadRequest.setTitle("is downloading");
         downLoadRequest.setDescription(finalQuality + " / " + finalSize);
-        downLoadRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_MOVIES, "TwtVideo" + finalQuality);
+        downLoadRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_MOVIES, "TwtVideo: " + TWTid);
         downloadManager.enqueue(downLoadRequest);
     }
 
@@ -153,7 +154,11 @@ Quality: "1280x720"
 
 
 
+                                mJSONObject_twtId  = jsonArray2.getString("id");
 
+
+
+                               String id  = mJSONObject_twtId;
                                      data = jsonArray2.getJSONArray("data");
 
 
@@ -171,7 +176,7 @@ Quality: "1280x720"
                                     one.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            displayDownloadVido(finalImageUrl, finalQuality, finalSize);
+                                            displayDownloadVido(finalImageUrl, finalQuality, finalSize,mJSONObject_twtId);
 
                                         }
                                     });
@@ -192,7 +197,7 @@ Quality: "1280x720"
                                         @Override
                                         public void onClick(View view) {
                                             //اوامر التحميل tow
-                                            displayDownloadVido(finalImageUrl1, finalQuality1, finalSize1);
+                                            displayDownloadVido(finalImageUrl1, finalQuality1, finalSize1,mJSONObject_twtId);
                                         }
                                     });
                                     //end the tow buttom
@@ -212,7 +217,7 @@ Quality: "1280x720"
                                         @Override
                                         public void onClick(View view) {
                                             //اوامر التحميل three
-                                            displayDownloadVido(finalImageUrl2, finalQuality2, finalSize2);
+                                            displayDownloadVido(finalImageUrl2, finalQuality2, finalSize2,mJSONObject_twtId);
 
                                         }
                                     });

@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,17 +35,17 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
     Button one, tow, three;
     DownloadManager downloadManager;
-    EditText editText;
-
+    JSONObject jsonArray2,jsonObject0,jsonObject1,jsonObject2;
+    JSONArray data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         displayDownloadingPe();
         downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-        editText = findViewById(R.id.E1);
+        EditText editText = findViewById(R.id.E1);
 
-        if (getUrlFromTwt() != null) {
+        if (getUrlFromTwt() != "") {
             editText.setText(getUrlFromTwt());
         }
 
@@ -84,21 +85,25 @@ Toast.makeText(this ,"ليس لديك انترنت ارجو المحاولة ل�
     }
     public void B1() {
 
-        OkHttpClient Client = new OkHttpClient();
-        //تعريف النص المدخل من المستخدم
 
-        //رابط الاتصال ب API **ملاحظة يوجد رابط تجربيبي الان**
-        final String url = "http://api.96.lt/twitter/?url=https://twitter.com/cybersec2030/status/1185280330086965248" + editText.getText().toString();
+        //تعريف النص المدخل من المستخدم
+       final EditText editText =findViewById(R.id.E1);
+        //رابط الاتصال ب API **ملاحظة يوجد رابط تجربيبي الان*https://twitter.com/cybersec2030/status/1185280330086965248*
+        final String test = editText.getText().toString();
+
+        final String url = "http://api.96.lt/twitter/?url=" + test;
 
         final Request request = new Request.Builder().url(url).build();
         //تعريف النص التجريبي لاخراج البيانات
-        final TextView textView = findViewById(R.id.T1);
+      //  final TextView textView = findViewById(R.id.T1);
 
+        OkHttpClient Client = new OkHttpClient();
         Client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                Log.v("Onfailure" , "norespons");
                 e.printStackTrace();
+
             }
 
             @Override
@@ -144,16 +149,16 @@ Quality: "1280x720"
 
                             try {
 
-                                JSONObject jsonArray2 = new JSONObject(R1);
-                                int statusCode = jsonArray2.getInt("statusCode");
+                                 jsonArray2 = new JSONObject(R1);
 
 
-                                    Toast.makeText(MainActivity.this, statusCode + "   انتظر قليلا   ", Toast.LENGTH_LONG).show();
-                                    JSONArray data = jsonArray2.getJSONArray("data");
+
+
+                                     data = jsonArray2.getJSONArray("data");
 
 
                                     //the one button
-                                    JSONObject jsonObject0 = data.getJSONObject(0);
+                                     jsonObject0 = data.getJSONObject(0);
                                     imageUrl = jsonObject0.getString("url");
                                     size = jsonObject0.getString("szie");
                                     quality = jsonObject0.getString("Quality");
@@ -166,14 +171,14 @@ Quality: "1280x720"
                                     one.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            displayDownloadVido(finalImageUrl, finalImageUrl, finalSize);
+                                            displayDownloadVido(finalImageUrl, finalQuality, finalSize);
 
                                         }
                                     });
                                     //end the one buttom
 
                                     //the tow button
-                                    JSONObject jsonObject1 = data.getJSONObject(1);
+                                     jsonObject1 = data.getJSONObject(1);
                                     imageUrl = jsonObject1.getString("url");
                                     size = jsonObject1.getString("szie");
                                     quality = jsonObject1.getString("Quality");
@@ -193,7 +198,7 @@ Quality: "1280x720"
                                     //end the tow buttom
 
                                     //the three button
-                                    JSONObject jsonObject2 = data.getJSONObject(2);
+                                     jsonObject2 = data.getJSONObject(2);
                                     imageUrl = jsonObject2.getString("url");
                                     size = jsonObject2.getString("szie");
                                     quality = jsonObject2.getString("Quality");

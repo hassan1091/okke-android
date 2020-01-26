@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,17 +33,23 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 public class MainActivity extends AppCompatActivity {
-    String  mJSONObject_twtId;
+    String mJSONObject_twtId;
     Button one, tow, three;
+
     DownloadManager downloadManager;
-    JSONObject jsonArray2,jsonObject0,jsonObject1,jsonObject2;
+    JSONObject jsonArray2, jsonObject0, jsonObject1, jsonObject2;
     JSONArray data;
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         displayDownloadingPe();
+        progressBar = findViewById(R.id.progressBar);
         downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         EditText editText = findViewById(R.id.E1);
 
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -59,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         return activeNetworkInfo != null && ((NetworkInfo) activeNetworkInfo).isConnected();
 
     }
+
     public void displayDownloadingPe() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this
@@ -67,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void displayDownloadVido(String finalUrl, String finalQuality, String finalSize,String TWTid) {
+    public void displayDownloadVido(String finalUrl, String finalQuality, String finalSize, String TWTid) {
         //اوامر التحميل one
         DownloadManager.Request downLoadRequest = new DownloadManager.Request(Uri.parse(finalUrl));
         downLoadRequest.setTitle("is downloading");
@@ -76,40 +85,48 @@ public class MainActivity extends AppCompatActivity {
         downloadManager.enqueue(downLoadRequest);
     }
 
-    public void checkNet (View view){
+    public void checkNet(View view) {
+
         if (isNetworkAvailable()) {
-B1();
-        }else {
-Toast.makeText(this ,"ليس لديك انترنت ارجو المحاولة لاحقا ",Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.VISIBLE);
+            B1();
+        } else {
+            progressBar.setVisibility(View.GONE);
+            Toast.makeText(this, "ليس لديك انترنت ارجو المحاولة لاحقا ", LENGTH_SHORT).show();
         }
 
     }
+
     public void B1() {
 
 
         //تعريف النص المدخل من المستخدم
-       final EditText editText =findViewById(R.id.E1);
+        final EditText editText = findViewById(R.id.E1);
         //رابط الاتصال ب API **ملاحظة يوجد رابط تجربيبي الان*https://twitter.com/cybersec2030/status/1185280330086965248*
         final String test = editText.getText().toString();
 
-        final String url = "http://api.96.lt/twitter/?url=" + test;
+        final String url = "http://api.nahn.tech/twitter/?url=" + test;
 
-        final Request request = new Request.Builder().url(url).build();
+        Request request = new Request.Builder().url(url).build();
         //تعريف النص التجريبي لاخراج البيانات
-      //  final TextView textView = findViewById(R.id.T1);
+        //  final TextView textView = findViewById(R.id.T1);
 
         OkHttpClient Client = new OkHttpClient();
         Client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.v("Onfailure" , "norespons");
+                Log.v("Onfailure", "norespons");
+
+
                 e.printStackTrace();
 
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                Log.v("onResponse", "respons");
                 if (response.isSuccessful()) {
+
                     final String R1 = response.body().string();
 
                     MainActivity.this.runOnUiThread(new Runnable() {
@@ -150,65 +167,65 @@ Quality: "1280x720"
 
                             try {
 
-                                 jsonArray2 = new JSONObject(R1);
+                                jsonArray2 = new JSONObject(R1);
 
 
-
-                                mJSONObject_twtId  = jsonArray2.getString("id");
-
+                                mJSONObject_twtId = jsonArray2.getString("id");
 
 
-                               String id  = mJSONObject_twtId;
-                                     data = jsonArray2.getJSONArray("data");
+                                String id = mJSONObject_twtId;
+                                data = jsonArray2.getJSONArray("data");
 
+                                progressBar.setVisibility(View.GONE);
+                                //the one button
+                                jsonObject0 = data.getJSONObject(0);
+                                imageUrl = jsonObject0.getString("url");
+                                size = jsonObject0.getString("szie");
+                                quality = jsonObject0.getString("Quality");
+                                one = (Button) findViewById(R.id.one);
+                                one.setVisibility(View.VISIBLE);
+                                one.setText(quality);
+                                //تشغيل الزر one
+                                final String finalImageUrl = imageUrl;
+                                final String finalQuality = quality;
+                                final String finalSize = size;
+                                one.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        displayDownloadVido(finalImageUrl, finalQuality, finalSize, mJSONObject_twtId);
 
-                                    //the one button
-                                     jsonObject0 = data.getJSONObject(0);
-                                    imageUrl = jsonObject0.getString("url");
-                                    size = jsonObject0.getString("szie");
-                                    quality = jsonObject0.getString("Quality");
-                                    one = (Button) findViewById(R.id.one);
-                                    one.setText(quality);
-                                    //تشغيل الزر one
-                                    final String finalImageUrl = imageUrl;
-                                    final String finalQuality = quality;
-                                    final String finalSize = size;
-                                    one.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            displayDownloadVido(finalImageUrl, finalQuality, finalSize,mJSONObject_twtId);
+                                    }
+                                });
+                                //end the one buttom
 
-                                        }
-                                    });
-                                    //end the one buttom
+                                //the tow button
+                                jsonObject1 = data.getJSONObject(1);
+                                imageUrl = jsonObject1.getString("url");
+                                size = jsonObject1.getString("szie");
+                                quality = jsonObject1.getString("Quality");
+                                tow = (Button) findViewById(R.id.tow);
+                                tow.setVisibility(View.VISIBLE);
+                                tow.setText(quality);
+                                final String finalImageUrl1 = imageUrl;
+                                final String finalQuality1 = quality;
+                                final String finalSize1 = size;
+                                tow.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        //اوامر التحميل tow
+                                        displayDownloadVido(finalImageUrl1, finalQuality1, finalSize1, mJSONObject_twtId);
+                                    }
+                                });
+                                //end the tow buttom
 
-                                    //the tow button
-                                     jsonObject1 = data.getJSONObject(1);
-                                    imageUrl = jsonObject1.getString("url");
-                                    size = jsonObject1.getString("szie");
-                                    quality = jsonObject1.getString("Quality");
-
-                                    tow = (Button) findViewById(R.id.tow);
-                                    tow.setText(quality);
-                                    final String finalImageUrl1 = imageUrl;
-                                    final String finalQuality1 = quality;
-                                    final String finalSize1 = size;
-                                    tow.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            //اوامر التحميل tow
-                                            displayDownloadVido(finalImageUrl1, finalQuality1, finalSize1,mJSONObject_twtId);
-                                        }
-                                    });
-                                    //end the tow buttom
-
-                                    //the three button
-                                     jsonObject2 = data.getJSONObject(2);
+                                //the three button
+                                if (data.getJSONObject(2) != null) {
+                                    jsonObject2 = data.getJSONObject(2);
                                     imageUrl = jsonObject2.getString("url");
                                     size = jsonObject2.getString("szie");
                                     quality = jsonObject2.getString("Quality");
-
                                     three = (Button) findViewById(R.id.three);
+                                    three.setVisibility(View.VISIBLE);
                                     three.setText(quality);
                                     final String finalImageUrl2 = imageUrl;
                                     final String finalQuality2 = quality;
@@ -217,11 +234,14 @@ Quality: "1280x720"
                                         @Override
                                         public void onClick(View view) {
                                             //اوامر التحميل three
-                                            displayDownloadVido(finalImageUrl2, finalQuality2, finalSize2,mJSONObject_twtId);
+                                            displayDownloadVido(finalImageUrl2, finalQuality2, finalSize2, mJSONObject_twtId);
 
                                         }
                                     });
-                                    //end the tow buttom
+                                } else {
+                                    three.setVisibility(View.GONE);
+                                }
+                                //end the three buttom
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -231,6 +251,8 @@ Quality: "1280x720"
                         }
                     });
 
+                } else {
+                    Log.e("the respons ", "is not work ");
                 }
             }
         });

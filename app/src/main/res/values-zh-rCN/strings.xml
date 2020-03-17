@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TWITTZEL</string>
+    <string name="Quality">质量</string>
+    <string name="Size">尺寸</string>
+    <string name="TWITTZEL">TWITTZEL</string>
+    <string name="Download_Now">现在下载</string>
+    <string name="Last_Urls">最后网址</string>
+    <string name="Put_the_link_here">将链接放在这里。 。 。</string>
+    <string name="You_do_not_have_internet_please_try_again_later">您没有互联网，请稍后再试</string>
+    <string name="Who_are_we">"关于 "</string>
+</resources>

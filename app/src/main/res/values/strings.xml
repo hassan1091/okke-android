@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">OkkE</string>
+    <string name="app_name">TWITTZEL</string>
+    <string name="sizeShape" translatable="false">125dp</string>
+    <string name="Quality">Quality</string>
+    <string name="Size">Size</string>
+    <string name="TWITTZEL">TWITTZEL</string>
+    <string name="Download_Now">Download now</string>
+    <string name="Last_Urls">Last urls</string>
+    <string name="Put_the_link_here">Put the link here. . .</string>
+    <string name="You_do_not_have_internet_please_try_again_later">You do not have internet, please try again later</string>
+    <string name="Who_are_we">"About "</string>
 </resources>

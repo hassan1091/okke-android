@@ -54,7 +54,7 @@ public class DownloadFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         Button oneButton = view.findViewById(R.id.one);
         final RequestData requestDataONE = getArguments().getParcelable(ExtraContext.REQ_ONE);
-        oneButton.setText(R.string.Quality + ": " + requestDataONE.getQuality() + "\n " + R.string.Size + " = " + requestDataONE.getSize());
+        oneButton.setText(getResources().getString(R.string.Quality) + ": " + requestDataONE.getQuality() + "\n " + getResources().getString(R.string.Quality) + " = " + requestDataONE.getSize());
         oneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +63,7 @@ public class DownloadFragment extends DialogFragment {
         });
         final RequestData requestDataTOW = getArguments().getParcelable(ExtraContext.REQ_TOW);
         Button towButton = view.findViewById(R.id.tow);
-        towButton.setText( getResources().getString(R.string.Quality ) + ": " + requestDataTOW.getQuality() + "\n " + getResources().getString(R.string.Size)  + " = " + requestDataTOW.getSize());
+        towButton.setText(getResources().getString(R.string.Quality) + ": " + requestDataTOW.getQuality() + "\n " + getResources().getString(R.string.Size) + " = " + requestDataTOW.getSize());
         towButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +72,7 @@ public class DownloadFragment extends DialogFragment {
         });
         final RequestData requestDataTHREE = getArguments().getParcelable(ExtraContext.REQ_THREE);
         Button threeButton = view.findViewById(R.id.three);
-        threeButton.setText(getResources().getString(R.string.Quality ) + ": " + requestDataTHREE.getQuality() + "\n " + getResources().getString(R.string.Quality ) + " = " + requestDataTHREE.getSize());
+        threeButton.setText(getResources().getString(R.string.Quality) + ": " + requestDataTHREE.getQuality() + "\n " + getResources().getString(R.string.Quality) + " = " + requestDataTHREE.getSize());
         threeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

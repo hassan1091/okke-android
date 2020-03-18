@@ -8,5 +8,6 @@
     <string name="Last_Urls">最后网址</string>
     <string name="Put_the_link_here">将链接放在这里。 。 。</string>
     <string name="You_do_not_have_internet_please_try_again_later">您没有互联网，请稍后再试</string>
-    <string name="Who_are_we">"关于 "</string>
+    <string name="Who_are_we">关于我们</string>
+    <string name="about_us_description">``我们指导您\'\'软件公司成立于2019年5月，最初是由网站服务，一群一群雄心勃勃的阿拉伯雄心勃勃的年轻人组成，后来成为一家拥有有前途和有前途的公司。</string>
 </resources>

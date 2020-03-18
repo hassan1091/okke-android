@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".Main2Activity">
+    android:background="#DEF1F8"
+    tools:context=".Activity.AboutUsActivity">
+
     <TextView
         android:id="@+id/headTextView"
         android:layout_width="match_parent"
@@ -13,69 +14,81 @@
         android:text="@string/Who_are_we"
         android:gravity="center"
         android:textSize="35sp"
-        android:textColor="#ffff"
+        android:textColor="#DEF1F8"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/shapehead"/>
+        android:background="@drawable/shapehead" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="The 'We direct you' software company, founded in 2019 in May, starting with website services, a simple group of Arab ambitious young people, to become a company with a promising title and a promising future."
+        android:text="@string/about_us_description"
         android:textColor="#000000"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headTextView" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/buttonLinkIn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="70dp"
-        android:layout_marginEnd="16dp"
-        tools:text="لينك ان"
+        android:layout_marginEnd="64dp"
+        android:background="#DEF1F8"
+        android:onClick="displayOpenLinkIn"
+        android:src="@drawable/linked1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+    <ImageButton
+        android:id="@+id/buttonTwitter"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="70dp"
-        tools:text="تويتر"
+        android:background="#DEF1F8"
+        android:onClick="displayOpenTwitter"
+        android:scaleType="fitCenter"
+        android:src="@drawable/iconfinder_2018_social_media_popular_app_logo_twitter_3225183"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/buttonOurWebsite"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="70dp"
-        tools:text="الموقع"
+        android:scaleType="centerInside"
+        android:src="@drawable/website"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        android:background="#FFFFFF"
+        android:onClick="displayOpenOurWebsite"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+         />
 
-    <Button
-        android:id="@+id/button6"
+    <ImageButton
+        android:id="@+id/buttonOurEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        tools:text="البريد الالكتروني"
+        android:src="@drawable/mail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonOurWebsite"
+        android:background="#DEF1F8"
+        android:onClick="displayOpenOurEmail"
+        />
 
     <TextView
         android:id="@+id/textView3"
@@ -86,7 +99,8 @@
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonOurEmail" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

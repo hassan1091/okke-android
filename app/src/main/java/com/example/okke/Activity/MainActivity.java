@@ -23,6 +23,18 @@ import com.example.okke.Fragments.DownloadFragment;
 import com.example.okke.R;
 import com.example.okke.data.ExtraContext;
 import com.example.okke.data.RequestData;
+import com.facebook.ads.AbstractAdListener;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AudienceNetworkAds;
+import com.facebook.ads.InterstitialAdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +55,7 @@ public class MainActivity extends AppCompatActivity  {
     //العنصر الذي تم اختيااره من قائمة القوائم الاسبقة
     public static final int CODE_LDU = 114;
     private static final String DOWNLOAD_FRAGMENT_TAG ="DOWNLOAD_FRAGMENT_TAG";
+    private String TAG= "faceBookAD";
     String mTwtId, mUserUrl;
     EditText editText;
     //قائمة اخر ما حمل
@@ -51,11 +64,15 @@ public class MainActivity extends AppCompatActivity  {
     JSONObject jsonArray2, jsonObject0, jsonObject1, jsonObject2;
     JSONArray data;
     ProgressBar progressBar;
-
-
+    //ads
+    private AdView mAdView; Ad adfacebook;
+  //  private InterstitialAd mInterstitialAd;
+    private com.facebook.ads.InterstitialAd interstitialAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
         mLRDownloadList = new ArrayList<String>();
         editText = findViewById(R.id.E1);
@@ -66,8 +83,78 @@ public class MainActivity extends AppCompatActivity  {
         if (getUrlFromTwt() != "") {
             editText.setText(getUrlFromTwt());
         }
-    }
 
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    //  displayInterstitialAd();
+        AdSettings.addTestDevice("88888888-aaaa-bbbb-cccc-222222222222");
+        String placeMent = "215067366274176_215069979607248";
+        AudienceNetworkAds.initialize(MainActivity.this);
+        interstitialAd = new com.facebook.ads.InterstitialAd(MainActivity.this, placeMent);
+        interstitialAd.setAdListener(new AbstractAdListener() {
+            public void onAdLoaded(Ad ad) {
+                adfacebook = ad;
+
+
+            }
+        });
+        // Set listeners for the Interstitial Ad
+        interstitialAd.setAdListener(new InterstitialAdListener() {
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+                // Interstitial ad displayed callback
+                Log.e(TAG, "Interstitial ad displayed.");
+            }
+
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                // Interstitial dismissed callback
+                Log.e(TAG, "Interstitial ad dismissed.");
+            }
+
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                // Ad error callback
+                Log.e(TAG, "Interstitial ad failed to load: " + adError.getErrorMessage());
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                // Interstitial ad is loaded and ready to be displayed
+                Log.d(TAG, "Interstitial ad is loaded and ready to be displayed!");
+                // Show the ad
+                interstitialAd.show();
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                // Ad clicked callback
+                Log.d(TAG, "Interstitial ad clicked!");
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                // Ad impression logged callback
+                Log.d(TAG, "Interstitial ad impression logged!");
+            }
+        });
+
+interstitialAd.loadAd();
+
+    }
+    @Override
+    public void onBackPressed() {
+        if (adfacebook == interstitialAd) {
+            interstitialAd.show();
+        }
+        super.onBackPressed();
+    }
     //التأكد من الاتضال بالانترنت
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -231,4 +318,22 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-}
+    public void Open_menu(View view) {
+      startActivity(new Intent(MainActivity.this, AboutUsActivity.class));  ;
+    }
+
+    public void displayInterstitialAd(View view) {
+     /*   mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-4200825572816870/1251621628");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        if (mInterstitialAd.isLoaded()){
+            mInterstitialAd.show();*/
+
+        if (interstitialAd.isAdLoaded()){
+            interstitialAd.show();
+        }
+
+        }
+
+    }
+

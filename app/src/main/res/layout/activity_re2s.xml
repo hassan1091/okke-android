@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.LastDownUrlActivity"
-    android:id="@+id/recyclerview"
-    android:background="#DEF1F8"
-    />
+    android:background="#DEF1F8">
+
+    <TextView
+        android:id="@+id/headTextView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/shapehead"
+        android:gravity="center"
+        android:text="@string/Last_Urls"
+        android:textColor="#ffff"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headTextView"
+        tools:context=".Activity.LastDownUrlActivity" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

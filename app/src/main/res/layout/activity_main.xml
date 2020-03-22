@@ -17,9 +17,9 @@
         android:layout_marginEnd="25dp"
         android:background="@drawable/edittextshape"
         android:hint="@string/Put_the_link_here"
-        android:textColorHint="#000"
         android:padding="20dp"
         android:textColor="#000000"
+        android:textColorHint="#000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,17 +61,15 @@
         android:id="@+id/headTextView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:text="@string/TWITTZEL"
+        android:background="@drawable/shapehead"
         android:gravity="center"
-        android:textSize="35sp"
+        android:text="@string/TWITTZEL"
         android:textColor="#ffff"
+        android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-      android:background="@drawable/shapehead"
-        android:onClick="displayInterstitialAd"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -90,19 +88,17 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="25dp"
         android:background="#00D81B60"
+        android:onClick="Open_menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_menu_black_24dp"
-android:onClick="Open_menu"
-        />
+        app:srcCompat="@drawable/ic_menu_black_24dp" />
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-4200825572816870/9659119901"
         app:layout_constraintBottom_toBottomOf="parent"

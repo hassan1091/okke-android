@@ -37,8 +37,10 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.gms:play-services-ads:19.0.0'
-
     //ads
     implementation 'com.facebook.android:audience-network-sdk:5.+'
-
+    //rooms
+    def room_version = "2.2.4"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }

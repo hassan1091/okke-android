@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private String mTwtId, mUserUrl;
     private EditText editText;
     private DownloadManager downloadManager;
-    private  JSONObject jsonArray2, jsonObject0, jsonObject1, jsonObject2;
+    private JSONObject jsonArray2, jsonObject0, jsonObject1, jsonObject2;
     private JSONArray data;
     private ProgressBar mProgressBar;
     //ads
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onBackPressed();
     }
+
     //التأكد من الاتضال بالانترنت
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -132,15 +133,18 @@ public class MainActivity extends AppCompatActivity {
     //موقع زر حمل
     public void bTForDownload(View view) {
         //التأكد من وجود الانترنت
-        if (isNetworkAvailable()) {
-            mProgressBar.setVisibility(View.VISIBLE);
-            //تشغيل API
-            displayApiTwitte();
-        } else {
-            mProgressBar.setVisibility(View.GONE);
-            Toast.makeText(this, getResources().getString(R.string.You_do_not_have_internet_please_try_again_later), LENGTH_SHORT).show();
+        if (!mUserUrl.isEmpty()) {
+            if (isNetworkAvailable()) {
+                mProgressBar.setVisibility(View.VISIBLE);
+                //تشغيل API
+                displayApiTwitte();
+            } else {
+                mProgressBar.setVisibility(View.GONE);
+                Toast.makeText(this, getResources().getString(R.string.You_do_not_have_internet_please_try_again_later), LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(this,getResources().getString(R.string.Add_the_link),Toast.LENGTH_LONG).show();
         }
-
     }
 
     // تفعيل api

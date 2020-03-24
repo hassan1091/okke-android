@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     //موقع زر حمل
     public void bTForDownload(View view) {
         //التأكد من وجود الانترنت
-        if (!mUserUrl.isEmpty()) {
+        if (!editText.getText().toString().isEmpty()) {
             if (isNetworkAvailable()) {
                 mProgressBar.setVisibility(View.VISIBLE);
                 //تشغيل API

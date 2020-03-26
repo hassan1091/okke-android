@@ -9,8 +9,6 @@
     <string name="Put_the_link_here"> ضع الرابط هنا . . </string>
     <string name="You_do_not_have_internet_please_try_again_later">ليس لديك انترنت ارجو المحاولة لاحقا</string>
     <string name="Who_are_we">"من نحن "</string>
-    <string name="about_us_description">شركة نحن نوجهك البرمجية أسست عام 2019 في شهر ماي. ابتداءا خدمات مواقع الويب.
-        بمجموعة بسيطة من الشباب الطموحيين العرب .
-        وهذا التطبيق قد طور بواسطة حسن الخليف </string>
+    <string name="about_us_description">شركة نحن نوجهك البرمجية أسست عام 2019 في شهر ماي. ابتداءا خدمات مواقع الويب. بمجموعة بسيطة من الشباب الطموحيين العرب.وهذا التطبيق قد طور بواسطة حسن الخليف و واصل المهري.</string>
     <string name="Add_the_link">اضف الرابط</string>
 </resources>

@@ -54,12 +54,10 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseForAdapter databaseForAdapter;
     private String  mUserUrl;
     private EditText editText;
-    private DownloadManager downloadManager;
-
     private ProgressBar mProgressBar;
     //ads
     private AdView mAdView;
-    private InterstitialAd mInterstitialAd;
+    public InterstitialAd mInterstitialAd;
 
 
     @Override
@@ -69,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         databaseForAdapter = DatabaseForAdapter.getsInstance(this);
         editText = findViewById(R.id.E1);
         mProgressBar = findViewById(R.id.progressBar);
-        downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         mAdView = findViewById(R.id.adView);
         displayCheckSelfPermission();
         //جلب البيانات اذا تم مشاركة الفيديو من تويتر
@@ -85,8 +82,19 @@ public class MainActivity extends AppCompatActivity {
         //اعلان قوقل
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-4200825572816870/1251621628");
+        mInterstitialAd.loadAd(adRequest);
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mInterstitialAd.isLoaded()){
+            mInterstitialAd.show();
+        }
+    }
 
     //التأكد من الاتضال بالانترنت
     private boolean isNetworkAvailable() {
@@ -193,9 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
     // الانتقال الى صفحة LastDownUrlActivity
     public void displayToLR(View view) {
-
             startActivityForResult(new Intent(MainActivity.this, LastDownUrlActivity.class), CODE_LDU);
-
     }
 
     //استقبال الرابط الذي تم ارساله من واجهة قائمة الروابط السابقة

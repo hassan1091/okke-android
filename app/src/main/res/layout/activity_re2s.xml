@@ -27,6 +27,6 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headTextView"
-        tools:context=".Activity.LastDownUrlActivity" />
+        tools:context=".ui.Activity.LastDownUrlActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

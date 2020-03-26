@@ -14,9 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.AboutUsActivity"></activity>
-        <activity android:name=".Activity.LastDownUrlActivity" />
-        <activity android:name=".Activity.MainActivity">
+        <activity android:name=".ui.Activity.AboutUsActivity"></activity>
+        <activity android:name=".ui.Activity.LastDownUrlActivity" />
+        <activity android:name=".ui.Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

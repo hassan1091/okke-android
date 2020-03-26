@@ -1,4 +1,4 @@
-package com.example.okke.Activity;
+package com.example.okke.ui.Activity;
 
 import android.Manifest;
 import android.app.DownloadManager;
@@ -20,25 +20,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.okke.Fragments.DownloadFragment;
+import com.example.okke.ui.Fragments.DownloadFragment;
 import com.example.okke.R;
 import com.example.okke.data.ExtraContext;
-import com.example.okke.data.RequestData;
-import com.example.okke.database.DatabaseForAdapter;
-import com.example.okke.database.LastUrlList;
+import com.example.okke.data.database.DatabaseForAdapter;
+import com.example.okke.data.database.LastUrlList;
 import com.facebook.ads.AbstractAdListener;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdSettings;
 import com.facebook.ads.AudienceNetworkAds;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -55,17 +52,14 @@ public class MainActivity extends AppCompatActivity {
     public static final int CODE_LDU = 114;
     public static final String DOWNLOAD_FRAGMENT_TAG = "DOWNLOAD_FRAGMENT_TAG";
     private DatabaseForAdapter databaseForAdapter;
-    private String mTwtId, mUserUrl;
+    private String  mUserUrl;
     private EditText editText;
     private DownloadManager downloadManager;
-    private JSONObject jsonArray2, jsonObject0, jsonObject1, jsonObject2;
-    private JSONArray data;
+
     private ProgressBar mProgressBar;
     //ads
     private AdView mAdView;
-    private Ad adFacebook;
-    //  private InterstitialAd mInterstitialAd;
-    private com.facebook.ads.InterstitialAd interstitialAd;
+    private InterstitialAd mInterstitialAd;
 
 
     @Override
@@ -91,29 +85,8 @@ public class MainActivity extends AppCompatActivity {
         //اعلان قوقل
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        //  displayInterstitialAd();
-        //اعلان فيسبوك
-        AdSettings.addTestDevice("88888888-aaaa-bbbb-cccc-222222222222");
-        String placeMent = "215067366274176_215069979607248";
-        AudienceNetworkAds.initialize(MainActivity.this);
-        interstitialAd = new com.facebook.ads.InterstitialAd(MainActivity.this, placeMent);
-        interstitialAd.setAdListener(new AbstractAdListener() {
-            public void onAdLoaded(Ad ad) {
-                adFacebook = ad;
-            }
-        });
-        interstitialAd.loadAd();
-
     }
 
-    //اعلانات فيسبوك
-    @Override
-    public void onBackPressed() {
-        if (adFacebook == interstitialAd) {
-            interstitialAd.show();
-        }
-        super.onBackPressed();
-    }
 
     //التأكد من الاتضال بالانترنت
     private boolean isNetworkAvailable() {
@@ -170,65 +143,14 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //متغيرات للمخرجات
-                            String imageUrl;
-                            String size;
-                            String quality;
-                            //فصل مواد نتائج `api`
-                            try {
-
-                                jsonArray2 = new JSONObject(R1);
-                                mTwtId = jsonArray2.getString("id");
-                                data = jsonArray2.getJSONArray("data");
-                                mProgressBar.setVisibility(View.GONE);
-                                //بيانات العنصر الاول
-                                RequestData requestData1 = null;
-                                if (data.getJSONObject(0) != null) {
-                                    jsonObject0 = data.getJSONObject(0);
-                                    imageUrl = jsonObject0.getString("url");
-                                    size = jsonObject0.getString("szie");
-                                    quality = jsonObject0.getString("Quality");
-                                    final String finalImageUrl = imageUrl;
-                                    final String finalQuality = quality;
-                                    final String finalSize = size;
-                                    //ارسال بينات  العنصر الاول
-                                    requestData1 = new RequestData(finalImageUrl, finalQuality, finalSize, mTwtId);
-                                }
-                                //بيانات العنصر الثاني
-                                RequestData requestData2 = null;
-                                if (data.getJSONObject(1) != null) {
-                                    jsonObject1 = data.getJSONObject(1);
-                                    imageUrl = jsonObject1.getString("url");
-                                    size = jsonObject1.getString("szie");
-                                    quality = jsonObject1.getString("Quality");
-                                    final String finalImageUrl1 = imageUrl;
-                                    final String finalQuality1 = quality;
-                                    final String finalSize1 = size;
-                                    //ارسال بينات  العنصر الثاني
-                                    requestData2 = new RequestData(finalImageUrl1, finalQuality1, finalSize1, mTwtId);
-                                }
-                                //بيانات العنصر الثالث
-                                RequestData requestData3 = null;
-                                if (data.getJSONObject(2) != null) {
-                                    jsonObject2 = data.getJSONObject(2);
-                                    imageUrl = jsonObject2.getString("url");
-                                    size = jsonObject2.getString("szie");
-                                    quality = jsonObject2.getString("Quality");
-                                    final String finalImageUrl2 = imageUrl;
-                                    final String finalQuality2 = quality;
-                                    final String finalSize2 = size;
-                                    //ارسال بينات  العنصر الثالث
-                                    requestData3 = new RequestData(finalImageUrl2, finalQuality2, finalSize2, mTwtId);
-                                }
-                                //ارسال الرابط الى قائمة اخر ما حمل
-                                new AsynM().execute();
-                                //فتح fragment الحاصة بالتحميل
-                                FragmentManager fragmentManager = getSupportFragmentManager();
-                                DownloadFragment downloadFragment = DownloadFragment.newInstance(requestData1, requestData2, requestData3);
-                                downloadFragment.show(fragmentManager, DOWNLOAD_FRAGMENT_TAG);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            //ارسال الرابط الى قائمة اخر ما حمل
+                            new AsynM().execute();
+                            //فتح fragment الحاصة بالتحميل
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            // DownloadFragment downloadFragment = DownloadFragment.newInstance(requestData1, requestData2, requestData3);
+                            DownloadFragment downloadFragment = DownloadFragment.newInstance(R1);
+                            downloadFragment.show(fragmentManager, DOWNLOAD_FRAGMENT_TAG);
+                            mProgressBar.setVisibility(View.GONE);
                         }
                     });
 
@@ -271,7 +193,9 @@ public class MainActivity extends AppCompatActivity {
 
     // الانتقال الى صفحة LastDownUrlActivity
     public void displayToLR(View view) {
-        startActivityForResult(new Intent(MainActivity.this, LastDownUrlActivity.class), CODE_LDU);
+
+            startActivityForResult(new Intent(MainActivity.this, LastDownUrlActivity.class), CODE_LDU);
+
     }
 
     //استقبال الرابط الذي تم ارساله من واجهة قائمة الروابط السابقة
@@ -301,4 +225,5 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+
 }

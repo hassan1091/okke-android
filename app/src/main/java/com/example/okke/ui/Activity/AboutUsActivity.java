@@ -1,4 +1,4 @@
-package com.example.okke.Activity;
+package com.example.okke.ui.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

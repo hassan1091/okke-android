@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#DEF1F8"
     android:orientation="vertical"
-    tools:context=".Activity.MainActivity">
+    tools:context=".ui.Activity.MainActivity">
 
     <EditText
         android:id="@+id/E1"
@@ -92,14 +92,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_menu_black_24dp" />
-
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
+        ads:adSize="SMART_BANNER"
         ads:adUnitId="ca-app-pub-4200825572816870/9659119901"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

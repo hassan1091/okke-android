@@ -1,4 +1,4 @@
-package com.example.okke.database;
+package com.example.okke.data.database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

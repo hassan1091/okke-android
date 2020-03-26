@@ -1,19 +1,18 @@
-package com.example.okke.Activity;
+package com.example.okke.ui.Activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.okke.Adapters.LR_Adapter;
 import com.example.okke.R;
 import com.example.okke.data.ExtraContext;
-import com.example.okke.database.DatabaseForAdapter;
-import com.example.okke.database.LastUrlList;
+import com.example.okke.data.database.DatabaseForAdapter;
+import com.example.okke.data.database.LastUrlList;
 import com.example.okke.listener.OnItemClickListener;
 
 import java.util.ArrayList;

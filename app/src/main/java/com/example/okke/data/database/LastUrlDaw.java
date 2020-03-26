@@ -1,7 +1,8 @@
-package com.example.okke.database;
+package com.example.okke.data.database;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 @Dao
 public interface LastUrlDaw {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void InsertUrl(LastUrlList lastUrlList);
 
     @Query("SELECT * FROM Url")

@@ -10,11 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.okke.R;
-import com.example.okke.database.LastUrlList;
+import com.example.okke.data.database.LastUrlList;
 import com.example.okke.listener.OnItemClickListener;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {

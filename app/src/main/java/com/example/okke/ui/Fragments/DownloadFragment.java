@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
+import static android.view.View.INVISIBLE;
 
 public class DownloadFragment extends DialogFragment {
 
@@ -59,7 +60,11 @@ public class DownloadFragment extends DialogFragment {
              mTwtId = jsonArray2.getString("id");
             data = jsonArray2.getJSONArray("data");
             //بيانات العنصر الاول
+            Button oneButton = view.findViewById(R.id.one);
             if (data.getJSONObject(0) != null) {
+                if (oneButton.getVisibility() ==INVISIBLE || oneButton.getVisibility() ==View.GONE){
+                    oneButton.setVisibility(View.VISIBLE);
+                }
                 jsonObject0 = data.getJSONObject(0);
                 imageUrl = jsonObject0.getString("url");
                 size = jsonObject0.getString("szie");
@@ -68,7 +73,6 @@ public class DownloadFragment extends DialogFragment {
                 final String finalQuality = quality;
                 final String finalSize = size;
                 //ارسال بينات  العنصر الاول
-                Button oneButton = view.findViewById(R.id.one);
                 oneButton.setText(getResources().getString(R.string.Quality) + ": " + finalQuality + "\n " + getResources().getString(R.string.Size) + " = " + finalSize);
                 oneButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -76,10 +80,15 @@ public class DownloadFragment extends DialogFragment {
                         displayDownloadVido(finalImageUrl,finalQuality,finalSize,mTwtId);
                     }
                 });
-
+            }else {
+                oneButton.setVisibility(View.GONE);
             }
             //بيانات العنصر الثاني
+            Button towButton = view.findViewById(R.id.tow);
             if (data.getJSONObject(1) != null) {
+                if (towButton.getVisibility() ==INVISIBLE || towButton.getVisibility() ==View.GONE){
+                    towButton.setVisibility(View.VISIBLE);
+                }
                 jsonObject1 = data.getJSONObject(1);
                 imageUrl = jsonObject1.getString("url");
                 size = jsonObject1.getString("szie");
@@ -88,7 +97,7 @@ public class DownloadFragment extends DialogFragment {
                 final String finalQuality1 = quality;
                 final String finalSize1 = size;
                 //ارسال بينات  العنصر الثاني
-                Button towButton = view.findViewById(R.id.tow);
+
                 towButton.setText(getResources().getString(R.string.Quality) + ": " + finalQuality1 + "\n " + getResources().getString(R.string.Size) + " = " + finalSize1);
                 towButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -96,11 +105,15 @@ public class DownloadFragment extends DialogFragment {
                         displayDownloadVido(finalImageUrl1,finalQuality1,finalSize1,mTwtId);
                     }
                 });
-
-
+            }else {
+                towButton.setVisibility(View.GONE);
             }
             //بيانات العنصر الثالث
+            Button threeButton = view.findViewById(R.id.three);
             if (data.getJSONObject(2) != null) {
+                if (towButton.getVisibility() ==INVISIBLE || towButton.getVisibility() ==View.GONE){
+                    towButton.setVisibility(View.VISIBLE);
+                }
                 jsonObject2 = data.getJSONObject(2);
                 imageUrl = jsonObject2.getString("url");
                 size = jsonObject2.getString("szie");
@@ -109,7 +122,6 @@ public class DownloadFragment extends DialogFragment {
                 final String finalQuality2 = quality;
                 final String finalSize2 = size;
                 //ارسال بينات  العنصر الثالث
-                Button threeButton = view.findViewById(R.id.three);
                 threeButton.setText(getResources().getString(R.string.Quality) + ": " + finalQuality2 + "\n " + getResources().getString(R.string.Size) + " = " + finalSize2);
                 threeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -117,7 +129,8 @@ public class DownloadFragment extends DialogFragment {
                         displayDownloadVido(finalImageUrl2,finalQuality2,finalSize2,mTwtId);
                     }
                 });
-
+            }else {
+                threeButton.setVisibility(View.GONE);
             }
         }catch (Exception x){
 

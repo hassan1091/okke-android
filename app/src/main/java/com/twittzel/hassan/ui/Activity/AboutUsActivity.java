@@ -1,4 +1,4 @@
-package com.example.okke.ui.Activity;
+package com.twittzel.hassan.ui.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.okke.R;
+import com.twittzel.hassan.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;

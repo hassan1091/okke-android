@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.okke">
+    package="com.twittzel.hassan">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" /> <!-- FOR DOWNLOAD -->
@@ -14,9 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.Activity.AboutUsActivity"></activity>
-        <activity android:name=".ui.Activity.LastDownUrlActivity" />
-        <activity android:name=".ui.Activity.MainActivity">
+        <activity android:name="com.twittzel.hassan.ui.Activity.AboutUsActivity"></activity>
+        <activity android:name="com.twittzel.hassan.ui.Activity.LastDownUrlActivity" />
+        <activity android:name="com.twittzel.hassan.ui.Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

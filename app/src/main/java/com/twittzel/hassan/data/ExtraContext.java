@@ -1,4 +1,4 @@
-package com.example.okke.data;
+package com.twittzel.hassan.data;
 
 public class ExtraContext {
     public static final String REQ_BODY = "REQ_BODY";

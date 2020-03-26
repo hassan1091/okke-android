@@ -1,4 +1,4 @@
-package com.example.okke.ui.Fragments;
+package com.twittzel.hassan.ui.Fragments;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -14,8 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.okke.R;
-import com.example.okke.data.ExtraContext;
+import com.twittzel.hassan.R;
+import com.twittzel.hassan.data.ExtraContext;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

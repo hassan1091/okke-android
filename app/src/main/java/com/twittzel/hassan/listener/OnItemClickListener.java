@@ -1,6 +1,6 @@
-package com.example.okke.listener;
+package com.twittzel.hassan.listener;
 
-import com.example.okke.data.database.LastUrlList;
+import com.twittzel.hassan.data.database.LastUrlList;
 
 import java.util.List;
 

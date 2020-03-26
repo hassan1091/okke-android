@@ -1,7 +1,6 @@
-package com.example.okke.ui.Activity;
+package com.twittzel.hassan.ui.Activity;
 
 import android.Manifest;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,16 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.okke.ui.Fragments.DownloadFragment;
-import com.example.okke.R;
-import com.example.okke.data.ExtraContext;
-import com.example.okke.data.database.DatabaseForAdapter;
-import com.example.okke.data.database.LastUrlList;
-import com.facebook.ads.AbstractAdListener;
-import com.facebook.ads.Ad;
-import com.facebook.ads.AdSettings;
-import com.facebook.ads.AudienceNetworkAds;
-import com.google.android.gms.ads.AdListener;
+import com.twittzel.hassan.ui.Fragments.DownloadFragment;
+import com.twittzel.hassan.R;
+import com.twittzel.hassan.data.ExtraContext;
+import com.twittzel.hassan.data.database.DatabaseForAdapter;
+import com.twittzel.hassan.data.database.LastUrlList;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;

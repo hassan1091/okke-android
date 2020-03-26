@@ -1,4 +1,4 @@
-package com.example.okke.ui.Activity;
+package com.twittzel.hassan.ui.Activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -8,12 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.okke.Adapters.LR_Adapter;
-import com.example.okke.R;
-import com.example.okke.data.ExtraContext;
-import com.example.okke.data.database.DatabaseForAdapter;
-import com.example.okke.data.database.LastUrlList;
-import com.example.okke.listener.OnItemClickListener;
+import com.twittzel.hassan.Adapters.LR_Adapter;
+import com.twittzel.hassan.R;
+import com.twittzel.hassan.data.ExtraContext;
+import com.twittzel.hassan.data.database.DatabaseForAdapter;
+import com.twittzel.hassan.data.database.LastUrlList;
+import com.twittzel.hassan.listener.OnItemClickListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;

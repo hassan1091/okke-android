@@ -1,4 +1,4 @@
-package com.example.okke.Adapters;
+package com.twittzel.hassan.Adapters;
 
 
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.okke.R;
-import com.example.okke.data.database.LastUrlList;
-import com.example.okke.listener.OnItemClickListener;
+import com.twittzel.hassan.R;
+import com.twittzel.hassan.data.database.LastUrlList;
+import com.twittzel.hassan.listener.OnItemClickListener;
 
 import java.util.List;
 

@@ -28,25 +28,36 @@ public class LastDownUrlActivity extends AppCompatActivity {
     private LR_Adapter lr_adapter;
     private List<LastUrlList> urlLists = new ArrayList<>();
     private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_re2s);
         mAdView = findViewById(R.id.adView);
+        displayGoogleAds();
+        //استخدام قاعدة البيانات
+        databaseForAdapter = DatabaseForAdapter.getsInstance(this);
+        //جلب البيانات من قاعدة البيانات
+        new Asyn().execute();
+        displayRecycleView();
+    }
+
+    //اعلان قوقل
+    private void displayGoogleAds() {
         //مهم للاعلانات
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        //اعلان قوقل
+
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        //استخدام قاعدة البيانات
-        databaseForAdapter = DatabaseForAdapter.getsInstance(this);
-        //جلب البيانات من قاعدة البيانات
-        new Asyn().execute();
-        //تعيين recyclerView
+    }
+
+    //تعيين recyclerView
+    private void displayRecycleView() {
+
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         // use a linear layout manager

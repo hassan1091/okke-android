@@ -16,45 +16,54 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 
 public class AboutUsActivity extends AppCompatActivity {
     private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         mAdView = findViewById(R.id.adView);
+        displayGoogleAds();
+    }
+
+    //اعلان قوقل
+    private void displayGoogleAds() {
         //مهم للاعلانات
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        //اعلان قوقل
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
 
+    //زر تشغيل تويتر
     public void displayOpenTwitter(View view) {
         String twitter = "https://twitter.com/NahnNawjhak";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitter));
         startActivity(intent);
     }
 
+    //زر تشغيل الموقع
     public void displayOpenOurWebsite(View view) {
         String website = "https://nahn.tech";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
         startActivity(intent);
     }
 
+    // زر تشغيل linkIn
     public void displayOpenLinkIn(View view) {
         String linkIn = "https://www.linkedin.com/company/%D9%86%D8%AD%D9%86-%D9%86%D9%88%D8%AC%D9%87%D9%83";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkIn));
         startActivity(intent);
     }
 
+    //زر فتح البريد الالكتروني
     public void displayOpenOurEmail(View view) {
-        String email= "admin@nahn.tech";
+        String email = "admin@nahn.tech";
         Intent it = new Intent(Intent.ACTION_SEND);
-        it.putExtra(Intent.EXTRA_EMAIL,email );
+        it.putExtra(Intent.EXTRA_EMAIL, email);
         it.setType("message/rfc822");
-        startActivity(Intent.createChooser(it,"Choose Mail App"));
+        startActivity(Intent.createChooser(it, "Choose Mail App"));
     }
 }

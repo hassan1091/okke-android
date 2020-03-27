@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int CODE_LDU = 114;
     public static final String DOWNLOAD_FRAGMENT_TAG = "DOWNLOAD_FRAGMENT_TAG";
     private DatabaseForAdapter databaseForAdapter;
-    private String  mUserUrl;
+    private String mUserUrl;
     private EditText editText;
     private ProgressBar mProgressBar;
     //ads
@@ -63,29 +63,38 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progressBar);
         mAdView = findViewById(R.id.adView);
         displayCheckSelfPermission();
-        //جلب البيانات اذا تم مشاركة الفيديو من تويتر
+        displayGetFromTWT();
+        displayGoogleAds();
+
+    }
+
+    //جلب البيانات اذا تم مشاركة الفيديو من تويتر
+    private void displayGetFromTWT() {
         if (getUrlFromTwt() != "") {
             editText.setText(getUrlFromTwt());
         }
+    }
+
+    //اعلان قوقل
+    private void displayGoogleAds() {
         //مهم للاعلانات
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        //اعلان قوقل
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-4200825572816870/1251621628");
         mInterstitialAd.loadAd(adRequest);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mInterstitialAd.isLoaded()){
+        //اظهار الاعلان الخلالي
+        if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         }
     }
@@ -195,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
     // الانتقال الى صفحة LastDownUrlActivity
     public void displayToLR(View view) {
-            startActivityForResult(new Intent(MainActivity.this, LastDownUrlActivity.class), CODE_LDU);
+        startActivityForResult(new Intent(MainActivity.this, LastDownUrlActivity.class), CODE_LDU);
     }
 
     //استقبال الرابط الذي تم ارساله من واجهة قائمة الروابط السابقة

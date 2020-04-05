@@ -14,9 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.twittzel.Hassan.ui.Activity.AboutUsActivity"></activity>
-        <activity android:name="com.twittzel.Hassan.ui.Activity.LastDownUrlActivity" />
-        <activity android:name="com.twittzel.Hassan.ui.Activity.MainActivity">
+        <activity android:name=".ui.Activity.DownloadActivity"></activity>
+        <activity android:name=".ui.Activity.AboutUsActivity" />
+        <activity android:name=".ui.Activity.LastDownUrlActivity" />
+        <activity android:name=".ui.Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,11 +30,10 @@
 
                 <data android:mimeType="text/*" />
             </intent-filter>
-        </activity>
-        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+        </activity> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4200825572816870~9233510237"/>
+            android:value="ca-app-pub-4200825572816870~9233510237" />
     </application>
 
 </manifest>

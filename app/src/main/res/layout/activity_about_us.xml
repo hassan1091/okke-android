@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/shapehead" />
+        android:background="@drawable/edit_shapehead" />
 
     <TextView
         android:id="@+id/textView2"
@@ -43,7 +43,7 @@
         android:layout_marginEnd="64dp"
         android:background="#DEF1F8"
         android:onClick="displayOpenLinkIn"
-        android:src="@drawable/linked1"
+        android:src="@drawable/pic_linked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -56,7 +56,7 @@
         android:background="#DEF1F8"
         android:onClick="displayOpenTwitter"
         android:scaleType="fitCenter"
-        android:src="@drawable/iconfinder_2018_social_media_popular_app_logo_twitter_3225183"
+        android:src="@drawable/pic_logo_twitter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -66,7 +66,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="70dp"
         android:scaleType="centerInside"
-        android:src="@drawable/website"
+        android:src="@drawable/pic_website"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:src="@drawable/mail"
+        android:src="@drawable/pic_mail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

@@ -17,19 +17,17 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentManager;
 
-import com.twittzel.Hassan.ui.Fragments.DownloadFragment;
-import com.twittzel.Hassan.R;
-import com.twittzel.Hassan.data.ExtraContext;
-import com.twittzel.Hassan.data.database.DatabaseForAdapter;
-import com.twittzel.Hassan.data.database.LastUrlList;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.twittzel.Hassan.R;
+import com.twittzel.Hassan.data.ExtraContext;
+import com.twittzel.Hassan.data.database.DatabaseForAdapter;
+import com.twittzel.Hassan.data.database.LastUrlList;
 
 import java.io.IOException;
 
@@ -44,7 +42,6 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class MainActivity extends AppCompatActivity {
     //العنصر الذي تم اختيااره من قائمة القوائم الاسبقة
     public static final int CODE_LDU = 114;
-    public static final String DOWNLOAD_FRAGMENT_TAG = "DOWNLOAD_FRAGMENT_TAG";
     private DatabaseForAdapter databaseForAdapter;
     private String mUserUrl;
     private EditText editText;
@@ -157,10 +154,13 @@ public class MainActivity extends AppCompatActivity {
                             //ارسال الرابط الى قائمة اخر ما حمل
                             new AsynM().execute();
                             //فتح fragment الحاصة بالتحميل
-                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            // FragmentManager fragmentManager = getSupportFragmentManager();
                             // DownloadFragment downloadFragment = DownloadFragment.newInstance(requestData1, requestData2, requestData3);
-                            DownloadFragment downloadFragment = DownloadFragment.newInstance(R1);
-                            downloadFragment.show(fragmentManager, DOWNLOAD_FRAGMENT_TAG);
+                            //   DownloadFragment downloadFragment = DownloadFragment.newInstance(R1);
+                            Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
+                            intent.putExtra(ExtraContext.REQ_BODY, R1);
+                            startActivity(intent);
+                            //  downloadFragment.show(fragmentManager, DOWNLOAD_FRAGMENT_TAG);
                             mProgressBar.setVisibility(View.GONE);
                         }
                     });
@@ -222,6 +222,10 @@ public class MainActivity extends AppCompatActivity {
     // حاليا فقط الذهاب الى AboutActivity
     public void Open_menu(View view) {
         startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
+    }
+
+    public void openDownloadAc(View view) {
+        startActivity(new Intent(this, DownloadActivity.class));
     }
 
     //اضافة الرابط عن طريق Thread

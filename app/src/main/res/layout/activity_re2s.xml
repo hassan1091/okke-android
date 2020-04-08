@@ -10,7 +10,7 @@
         android:id="@+id/headTextView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/shapehead"
+        android:background="@drawable/edit_shapehead"
         android:gravity="center"
         android:text="@string/Last_Urls"
         android:textColor="#ffff"

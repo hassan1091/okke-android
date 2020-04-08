@@ -33,7 +33,7 @@ public class DownloadActivity extends AppCompatActivity {
     public static final String KEY_TWT_ID = "KEY_TWT_ID";
     public static final String KEY_QUALITY = "KEY_QUALITY";
     public static final String KEY_SIZE = "KEY_SIZE";
-    //فصل مواد نتائج `api`
+    // فصل مواد نتائج `api`
     private JSONObject jsonArray2, jsonObject0, jsonObject1, jsonObject2;
     private JSONArray data;
 

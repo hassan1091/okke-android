@@ -1,4 +1,4 @@
-package com.twittzel.Hassan.Adapters;
+package com.twittzel.Hassan.adapters;
 
 
 import android.view.LayoutInflater;

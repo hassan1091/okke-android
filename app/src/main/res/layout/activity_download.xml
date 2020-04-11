@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/background"
     tools:context=".ui.Activity.DownloadActivity">
 
     <TextView
@@ -37,6 +37,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="#00D81B60"
+        android:onClick="displayToAboutUs"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_menu_black_24dp" />
@@ -68,7 +69,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_shape"
-            android:textColor="#ffff"
+            android:textColor="#FFFFFF"
             android:visibility="visible"
             android:textStyle="bold"
             android:textSize="17sp"
@@ -83,6 +84,7 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/edit_shape"
             android:visibility="visible"
+            android:textColor="#FFFFFFFF"
             android:textStyle="bold"
             android:textSize="17sp"
             android:gravity="left|center"
@@ -93,7 +95,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_shape"
-            android:textColor="#ffff"
+            android:textColor="#FFFFFF"
             android:visibility="visible"
             android:textStyle="bold"
             android:textSize="17sp"

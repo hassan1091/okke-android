@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DEF1F8">
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/headTextView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/edit_shapehead"
+        android:layout_height="50dp"
+        android:background="@color/headColor"
         android:gravity="center"
         android:text="@string/Last_Urls"
-        android:textColor="#ffff"
+        android:textColor="@color/white_text"
         android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

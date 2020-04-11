@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DEF1F8"
+    android:background="@color/background"
     tools:context=".ui.Activity.AboutUsActivity">
 
     <TextView
         android:id="@+id/headTextView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:text="@string/Who_are_we"
         android:gravity="center"
         android:textSize="35sp"
@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/edit_shapehead" />
+        android:background="@color/headColor" />
 
     <TextView
         android:id="@+id/textView2"
@@ -28,7 +28,7 @@
         android:layout_marginTop="70dp"
         android:gravity="center"
         android:text="@string/about_us_description"
-        android:textColor="#000000"
+        android:textColor="@color/hint_edit_text"
         android:padding="1dp"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="64dp"
-        android:background="#DEF1F8"
+        android:background="@color/background"
         android:onClick="displayOpenLinkIn"
         android:src="@drawable/pic_linked"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="70dp"
-        android:background="#DEF1F8"
+        android:background="@color/background"
         android:onClick="displayOpenTwitter"
         android:scaleType="fitCenter"
         android:src="@drawable/pic_logo_twitter"
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="#FFFFFF"
+        android:background="@color/background"
         android:onClick="displayOpenOurWebsite"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
          />
@@ -85,7 +85,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonOurWebsite"
-        android:background="#DEF1F8"
+        android:background="@color/background"
         android:onClick="displayOpenOurEmail"
         />
 
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="admin@nahn.tech"
-        android:textColor="#000000"
+        android:textColor="@color/hint_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonOurEmail" />

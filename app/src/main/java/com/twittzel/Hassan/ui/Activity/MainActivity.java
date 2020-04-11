@@ -1,8 +1,10 @@
 package com.twittzel.Hassan.ui.Activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.ads.AdRequest;
@@ -40,17 +43,15 @@ import okhttp3.Response;
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity {
-    //العنصر الذي تم اختيااره من قائمة القوائم الاسبقة
+    //العنصر الذي تم اختياره من قائمة القوائم الاسبقة
     public static final int CODE_LDU = 114;
     private DatabaseForAdapter databaseForAdapter;
     private String mUserUrl;
     private EditText editText;
     private ProgressBar mProgressBar;
-    //ads
-    private AdView mAdView;
     public InterstitialAd mInterstitialAd;
 
-
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +59,16 @@ public class MainActivity extends AppCompatActivity {
         databaseForAdapter = DatabaseForAdapter.getsInstance(this);
         editText = findViewById(R.id.E1);
         mProgressBar = findViewById(R.id.progressBar);
-        mAdView = findViewById(R.id.adView);
-        displayCheckSelfPermission();
+        //جعل الشاشة بشكل عمودي
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        //منع دوران الشاشة
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        //استقبال البيانات من تويتر
         displayGetFromTWT();
+        // طلب صلاحية التحميل
+        displayCheckSelfPermission();
+        //تشغيل اعلا قوقل
         displayGoogleAds();
-
     }
 
     //جلب البيانات اذا تم مشاركة الفيديو من تويتر
@@ -74,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     //اعلان قوقل
     private void displayGoogleAds() {
+        AdView mAdView = findViewById(R.id.adView);
         //مهم للاعلانات
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -81,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         AdRequest adRequest = new AdRequest.Builder().build();
+        //اعلان البانر
         mAdView.loadAd(adRequest);
+        //اعلان الخيلالي
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-4200825572816870/1251621628");
         mInterstitialAd.loadAd(adRequest);
@@ -153,16 +162,12 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             //ارسال الرابط الى قائمة اخر ما حمل
                             new AsynM().execute();
-                            //فتح fragment الحاصة بالتحميل
-                            // FragmentManager fragmentManager = getSupportFragmentManager();
-                            // DownloadFragment downloadFragment = DownloadFragment.newInstance(requestData1, requestData2, requestData3);
-                            //   DownloadFragment downloadFragment = DownloadFragment.newInstance(R1);
-                            Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
-                            intent.putExtra(ExtraContext.REQ_BODY, R1);
-                            startActivity(intent);
-                            //  downloadFragment.show(fragmentManager, DOWNLOAD_FRAGMENT_TAG);
+                            //فتح صفحة التحميل
+                            startActivity(new Intent(MainActivity.this, com.twittzel.Hassan.ui.Activity.DownloadActivity.class)
+                                    .putExtra(ExtraContext.REQ_BODY, R1));
                             mProgressBar.setVisibility(View.GONE);
                         }
+
                     });
 
                 } else {
@@ -196,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (receivedAction.equals(Intent.ACTION_MAIN)) {
             //app has been launched directly, not from share list
-
         }
 
         return theTwtUrl;
@@ -204,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
     // الانتقال الى صفحة LastDownUrlActivity
     public void displayToLR(View view) {
-        startActivityForResult(new Intent(MainActivity.this, LastDownUrlActivity.class), CODE_LDU);
+        startActivityForResult(new Intent(MainActivity.this, com.twittzel.Hassan.ui.Activity.LastDownUrlActivity.class), CODE_LDU);
     }
 
     //استقبال الرابط الذي تم ارساله من واجهة قائمة الروابط السابقة
@@ -221,11 +225,18 @@ public class MainActivity extends AppCompatActivity {
 
     // حاليا فقط الذهاب الى AboutActivity
     public void Open_menu(View view) {
-        startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
+        startActivity(new Intent(MainActivity.this, com.twittzel.Hassan.ui.Activity.AboutUsActivity.class));
     }
 
+    //تغيير من الوضع الداكن الى الوضع البيعي والعكس
     public void openDownloadAc(View view) {
-        startActivity(new Intent(this, DownloadActivity.class));
+
+        if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
     }
 
     //اضافة الرابط عن طريق Thread

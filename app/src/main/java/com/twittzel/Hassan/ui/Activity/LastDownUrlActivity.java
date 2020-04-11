@@ -1,6 +1,8 @@
 package com.twittzel.Hassan.ui.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -8,17 +10,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.twittzel.Hassan.Adapters.LR_Adapter;
-import com.twittzel.Hassan.R;
-import com.twittzel.Hassan.data.ExtraContext;
-import com.twittzel.Hassan.data.database.DatabaseForAdapter;
-import com.twittzel.Hassan.data.database.LastUrlList;
-import com.twittzel.Hassan.listener.OnItemClickListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.twittzel.Hassan.R;
+import com.twittzel.Hassan.adapters.LR_Adapter;
+import com.twittzel.Hassan.data.ExtraContext;
+import com.twittzel.Hassan.data.database.DatabaseForAdapter;
+import com.twittzel.Hassan.data.database.LastUrlList;
+import com.twittzel.Hassan.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,23 +29,31 @@ public class LastDownUrlActivity extends AppCompatActivity {
     private DatabaseForAdapter databaseForAdapter;
     private LR_Adapter lr_adapter;
     private List<LastUrlList> urlLists = new ArrayList<>();
-    private AdView mAdView;
 
+
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_re2s);
-        mAdView = findViewById(R.id.adView);
+        //جعل الشاشة بشكل عمودي
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        //منع دوران الشاشة
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        //تشغيل اعلان قوقل
         displayGoogleAds();
         //استخدام قاعدة البيانات
         databaseForAdapter = DatabaseForAdapter.getsInstance(this);
         //جلب البيانات من قاعدة البيانات
         new Asyn().execute();
+        //تشغيل RecycleView
         displayRecycleView();
     }
 
+
     //اعلان قوقل
     private void displayGoogleAds() {
+        AdView mAdView = findViewById(R.id.adView);
         //مهم للاعلانات
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

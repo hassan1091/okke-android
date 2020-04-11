@@ -8,4 +8,9 @@
     <color name="bt_main_color">#20B2D1</color>
     <color name="white_text">#FFFFFF</color>
     <color name="back_bt">#21EEFF00</color>
+    <color name="background">#DEF1F8</color>
+    <color name="back_edit_text">#ffffff</color>
+    <color name="stroke_edit_text">#ffffff</color>
+    <color name="hint_edit_text">#000000</color>
+
 </resources>

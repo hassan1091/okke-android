@@ -1,32 +1,39 @@
 package com.twittzel.Hassan.ui.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import com.twittzel.Hassan.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.twittzel.Hassan.R;
 
 public class AboutUsActivity extends AppCompatActivity {
-    private AdView mAdView;
 
+
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-        mAdView = findViewById(R.id.adView);
+        //جعل الشاشة بشكل عمودي
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        //منع دوران الشاشة
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         displayGoogleAds();
     }
 
     //اعلان قوقل
     private void displayGoogleAds() {
+        AdView mAdView = findViewById(R.id.adView);
         //مهم للاعلانات
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

@@ -53,7 +53,7 @@ public class AboutUsActivity extends AppCompatActivity {
 
     //زر تشغيل الموقع
     public void displayOpenOurWebsite(View view) {
-        String website = "https://nahn.tech";
+        String website = "https://nahn.tk/";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
         startActivity(intent);
     }

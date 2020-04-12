@@ -47,7 +47,7 @@ public class WorkForNotify extends Worker {
         builder.setContentTitle(id)
                 .setContentText(context.getResources().getString(R.string.Quality) + ": " + quality +
                         "\n " + context.getResources().getString(R.string.Size) + " = " + size)
-                .setSmallIcon(R.drawable.twtzel);
+                .setSmallIcon(R.drawable.pic_main_twittzel);
         manager.notify(1, builder.build());
     }
 }

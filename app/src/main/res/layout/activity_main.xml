@@ -143,6 +143,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headTextView"
-        app:srcCompat="@drawable/pic_main_twittzel" />
+        app:srcCompat="@drawable/pic_main_a_twittzel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,6 @@ package com.twittzel.Hassan.ui.Activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +14,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.twittzel.Hassan.AppExecutor;
 import com.twittzel.Hassan.R;
 import com.twittzel.Hassan.adapters.LR_Adapter;
 import com.twittzel.Hassan.data.ExtraContext;
@@ -45,7 +45,8 @@ public class LastDownUrlActivity extends AppCompatActivity {
         //استخدام قاعدة البيانات
         databaseForAdapter = DatabaseForAdapter.getsInstance(this);
         //جلب البيانات من قاعدة البيانات
-        new Asyn().execute();
+        // new Asyn().execute();
+        getDataFromDatabaseAndUpdateLrAdapter();
         //تشغيل RecycleView
         displayRecycleView();
     }
@@ -60,19 +61,15 @@ public class LastDownUrlActivity extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(new AdRequest.Builder().build());
     }
 
     //تعيين recyclerView
     private void displayRecycleView() {
-
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         // use a linear layout manager
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //بدء حدث حيما  يتم النقر على الزر
         lr_adapter = new LR_Adapter(urlLists, new OnItemClickListener() {
             @Override
@@ -88,28 +85,39 @@ public class LastDownUrlActivity extends AppCompatActivity {
         recyclerView.setAdapter(lr_adapter);
     }
 
-    // بدء Thread جديد
-    public class Asyn extends AsyncTask<Void, Void, List<LastUrlList>> {
-
-        @Override
-        protected List<LastUrlList> doInBackground(Void... voids) {
-            //اخذ البيانات قاعدة البيانات
-            return databaseForAdapter.lastUrlDaw().getLastUrlList();
-        }
-
-        @Override
-        protected void onPostExecute(List<LastUrlList> lastUrlLists) {
-            super.onPostExecute(lastUrlLists);
-            //وضع جميع الروابط داخل متغير
-            urlLists.addAll(lastUrlLists);
-            //فتح Thread للتعامل مع الواجهة
-            LastDownUrlActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    //تحديث بيانات Adapter
-                    lr_adapter.notifyDataSetChanged();
-                }
-            });
-        }
+    /*
+        // بدء Thread جديد
+      /*public class Asyn extends AsyncTask<Void, Void, List<LastUrlList>> {
+            @Override
+            protected List<LastUrlList> doInBackground(Void... voids) {
+                //اخذ البيانات قاعدة البيانات
+                return databaseForAdapter.lastUrlDaw().getLastUrlList();
+            }
+            @Override
+            protected void onPostExecute(List<LastUrlList> lastUrlLists) {
+                super.onPostExecute(lastUrlLists);
+                //وضع جميع الروابط داخل متغير
+                urlLists.addAll(lastUrlLists);
+                //فتح Thread للتعامل مع الواجهة
+                LastDownUrlActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //تحديث بيانات Adapter
+                        lr_adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }*/
+    private void getDataFromDatabaseAndUpdateLrAdapter() {
+        //اخذ البيانات قاعدة البيانات
+        //وضع جميع الروابط داخل متغير
+        AppExecutor.getInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                urlLists.clear();
+                urlLists.addAll(databaseForAdapter.lastUrlDaw().getLastUrlList());
+            }
+        });
+        lr_adapter.notifyDataSetChanged();
     }
 }

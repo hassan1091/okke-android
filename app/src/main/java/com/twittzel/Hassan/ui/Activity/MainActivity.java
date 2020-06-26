@@ -8,7 +8,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -27,18 +27,13 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.twittzel.Hassan.AppExecutor;
 import com.twittzel.Hassan.R;
 import com.twittzel.Hassan.data.ExtraContext;
+import com.twittzel.Hassan.data.api.Api;
+import com.twittzel.Hassan.data.api.result.TwitterVideoResult;
 import com.twittzel.Hassan.data.database.DatabaseForAdapter;
 import com.twittzel.Hassan.data.database.LastUrlList;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -73,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     //جلب البيانات اذا تم مشاركة الفيديو من تويتر
     private void displayGetFromTWT() {
-        if (getUrlFromTwt() != "") {
-            editText.setText(getUrlFromTwt());
-        }
+        if (!getUrlFromTwt().equals("")) editText.setText(getUrlFromTwt());
     }
 
     //اعلان قوقل
@@ -100,9 +93,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //اظهار الاعلان الخلالي
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }
+        if (mInterstitialAd.isLoaded()) mInterstitialAd.show();
     }
 
     //التأكد من الاتضال بالانترنت
@@ -127,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
             if (isNetworkAvailable()) {
                 mProgressBar.setVisibility(View.VISIBLE);
                 //تشغيل API
-                displayApiTwitte();
+                //   displayApiTwitte();
+                displayTwitterApi();
             } else {
                 mProgressBar.setVisibility(View.GONE);
                 Toast.makeText(this, getResources().getString(R.string.You_do_not_have_internet_please_try_again_later), LENGTH_SHORT).show();
@@ -138,46 +130,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // تفعيل api
-    public void displayApiTwitte() {
-        //رابط الاتصال ب API **ملاحظة يوجد رابط تجربيبي الان*https://twitter.com/cybersec2030/status/1185280330086965248*
-        //تعريف النص المدخل من المستخدم
-        mUserUrl = editText.getText().toString();
-        //اضافة الرابط الى api
-        final String url = "http://api.nahn.tech/twitter/?url=" + mUserUrl;
-        Request request = new Request.Builder().url(url).build();
-        OkHttpClient Client = new OkHttpClient();
-        Client.newCall(request).enqueue(new Callback() {
+    private void displayTwitterApi() {
+        mUserUrl = String.valueOf(editText.getText());
+        new Api().getTwitterVideoResult(mUserUrl).enqueue(new retrofit2.Callback<TwitterVideoResult>() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onResponse(@NonNull retrofit2.Call<TwitterVideoResult> call, @NonNull retrofit2.Response<TwitterVideoResult> response) {
+                if (response.isSuccessful()) {
+                    //ارسال الرابط الى قائمة اخر ما حمل
+                    addUrlToDataBase();
+                    //فتح صفحة التحميل 
+                    Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
+                    intent.putExtra(ExtraContext.TWITTER_DATA, response.body());
+                    Log.e("response ", "isSuccessful");
+                } else Log.e("response ", "!isSuccessful");
                 mProgressBar.setVisibility(View.GONE);
-                e.printStackTrace();
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    final String R1 = response.body().string();
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //ارسال الرابط الى قائمة اخر ما حمل
-                            new AsynM().execute();
-                            //فتح صفحة التحميل
-                            startActivity(new Intent(MainActivity.this, com.twittzel.Hassan.ui.Activity.DownloadActivity.class)
-                                    .putExtra(ExtraContext.REQ_BODY, R1));
-                            mProgressBar.setVisibility(View.GONE);
-                        }
-
-                    });
-
-                } else {
-                    mProgressBar.setVisibility(View.GONE);
-                    Log.e("the respons ", "is not work ");
-                }
+            public void onFailure(@NonNull retrofit2.Call<TwitterVideoResult> call, @NonNull Throwable t) {
+                mProgressBar.setVisibility(View.GONE);
+                t.printStackTrace();
             }
         });
     }
-
     // استقبال الرابط من تويتر
     public String getUrlFromTwt() {
         String theTwtUrl = "";
@@ -188,27 +163,23 @@ public class MainActivity extends AppCompatActivity {
         //find out what we are dealing with
         String receivedType = receivedIntent.getType();
         //make sure it's an action and type we can handle
+        assert receivedAction != null;
         if (receivedAction.equals(Intent.ACTION_SEND)) {
             //content is being shared
+            assert receivedType != null;
             if (receivedType.startsWith("text/")) {
                 //handle sent text
                 receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
-                if (receivedText != null) {
-                    //set the text
-                    theTwtUrl = receivedText;
-                }
-
+                //set the text
+                if (receivedText != null) theTwtUrl = receivedText;
             }
-        } else if (receivedAction.equals(Intent.ACTION_MAIN)) {
-            //app has been launched directly, not from share list
         }
-
         return theTwtUrl;
     }
 
     // الانتقال الى صفحة LastDownUrlActivity
     public void displayToLR(View view) {
-        startActivityForResult(new Intent(MainActivity.this, com.twittzel.Hassan.ui.Activity.LastDownUrlActivity.class), CODE_LDU);
+        startActivityForResult(new Intent(MainActivity.this, LastDownUrlActivity.class), CODE_LDU);
     }
 
     //استقبال الرابط الذي تم ارساله من واجهة قائمة الروابط السابقة
@@ -216,21 +187,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //تعين قيمة editTest بالرابط المختار
-        if (requestCode == CODE_LDU) {
-            if (resultCode == RESULT_OK && data != null) {
-                editText.setText(data.getStringExtra(ExtraContext.THIS_URL));
-            }
-        }
+        if (requestCode == CODE_LDU) if (resultCode == RESULT_OK && data != null)
+            editText.setText(data.getStringExtra(ExtraContext.THIS_URL));
     }
 
     // حاليا فقط الذهاب الى AboutActivity
     public void Open_menu(View view) {
-        startActivity(new Intent(MainActivity.this, com.twittzel.Hassan.ui.Activity.AboutUsActivity.class));
+        startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
     }
 
     //تغيير من الوضع الداكن الى الوضع البيعي والعكس
     public void dayDark(View view) {
-
         if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
@@ -239,15 +206,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //اضافة الرابط عن طريق Thread
-    public class AsynM extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
-            LastUrlList urlList = new LastUrlList();
-            urlList.setmLRDownList(mUserUrl);
-            databaseForAdapter.lastUrlDaw().InsertUrl(urlList);
-            return null;
-        }
+    private void addUrlToDataBase() {
+        AppExecutor.getInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                LastUrlList urlList = new LastUrlList();
+                urlList.setmLRDownList(mUserUrl);
+                databaseForAdapter.lastUrlDaw().InsertUrl(urlList);
+            }
+        });
     }
+
 
 }

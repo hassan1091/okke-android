@@ -76,7 +76,7 @@ public class LastDownUrlActivity extends AppCompatActivity {
         //بدء حدث حيما  يتم النقر على الزر
         lr_adapter = new LR_Adapter(urlLists, new OnItemClickListener() {
             @Override
-            public void OnItemClickListener(int position, List<LastUrlList> lastUserUrlArray) {
+            public void onItemClickListener(int position, List<LastUrlList> lastUserUrlArray) {
                 //اخذ الرابط المختار وارساله الى MainActivity
                 Intent intent = new Intent();
                 intent.putExtra(ExtraContext.THIS_URL, lastUserUrlArray.get(position).getmLRDownList());

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.twittzel.Hassan"
         minSdkVersion 21
@@ -25,23 +25,26 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.3.1")
+
     // ok http3
     implementation("com.squareup.okhttp3:okhttp:4.3.1")
     implementation 'com.google.code.gson:gson:2.8.6'
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.3.1")
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.6.2"
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     // recyclerview
     implementation "androidx.recyclerview:recyclerview:1.1.0"
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.google.android.gms:play-services-ads:19.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.gms:play-services-ads:19.2.0'
     //rooms
-    def room_version = "2.2.4"
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-    def work_version = "2.3.4"
+    implementation "androidx.room:room-runtime:2.2.5"
+    annotationProcessor "androidx.room:room-compiler:2.2.5"
     // Work
+    def work_version = "2.3.4"
     implementation "androidx.work:work-runtime:$work_version"
 }

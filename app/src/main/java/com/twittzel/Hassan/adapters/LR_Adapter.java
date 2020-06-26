@@ -53,7 +53,7 @@ public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClickListener.OnItemClickListener(getAdapterPosition(),lastUserUrlArray);
+                    onItemClickListener.onItemClickListener(getAdapterPosition(),lastUserUrlArray);
                 }
             });
 

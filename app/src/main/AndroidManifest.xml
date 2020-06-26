@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.twittzel.Hassan">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,8 +14,9 @@
         android:roundIcon="@drawable/pic_main_twittzel"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".ui.Activity.DownloadActivity"></activity>
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <activity android:name=".ui.Activity.DownloadActivity"/>
         <activity android:name=".ui.Activity.AboutUsActivity" />
         <activity android:name=".ui.Activity.LastDownUrlActivity" />
         <activity android:name=".ui.Activity.MainActivity">

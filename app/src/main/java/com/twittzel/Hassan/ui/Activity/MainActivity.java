@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //تغيير من الوضع الداكن الى الوضع البيعي والعكس
-    public void openDownloadAc(View view) {
+    public void dayDark(View view) {
 
         if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);

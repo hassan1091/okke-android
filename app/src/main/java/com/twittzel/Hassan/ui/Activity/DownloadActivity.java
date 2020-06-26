@@ -195,9 +195,6 @@ public class DownloadActivity extends AppCompatActivity {
         OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(WorkForNotify.class)
                 .setInputData(data)
                 .build();
-       /* PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest
-                .Builder(WorkForNotify.class,3, TimeUnit.MINUTES)
-                .build();*/
         WorkManager.getInstance(context).enqueue(request);
 
     }

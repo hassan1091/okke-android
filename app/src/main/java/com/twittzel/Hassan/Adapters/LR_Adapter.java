@@ -30,8 +30,7 @@ public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {
     public LR_viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_last_down_url, parent, false);
-        LR_viewHolder lr_viewHolder = new LR_viewHolder(view, onItemClickListener,lastUserUrlArray);
-        return lr_viewHolder;
+        return new LR_viewHolder(view, onItemClickListener,lastUserUrlArray);
     }
 
     @Override

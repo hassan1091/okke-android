@@ -7,17 +7,12 @@ import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum implements Parcelable
-{
+public class Datum implements Parcelable{
 
-    @SerializedName("url")
-    @Expose
     private String url;
-    @SerializedName("szie")
-    @Expose
+
     private String szie;
-    @SerializedName("Quality")
-    @Expose
+
     private String quality;
     public final static Creator<Datum> CREATOR = new Creator<Datum>() {
 

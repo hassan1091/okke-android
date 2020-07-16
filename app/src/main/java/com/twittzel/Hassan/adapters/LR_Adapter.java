@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.twittzel.Hassan.R;
 import com.twittzel.Hassan.data.database.LastUrlList;
-import com.twittzel.Hassan.listener.OnItemClickListener;
 
 import java.util.List;
 
 public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {
-
+    public interface OnItemClickListener {
+        void onItemClickListener(int position, List<LastUrlList> lastUserUrlArray);
+    }
     List<LastUrlList> lastUserUrlArray;
     OnItemClickListener onItemClickListener;
 

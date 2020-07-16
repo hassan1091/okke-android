@@ -13,6 +13,8 @@ import androidx.work.WorkerParameters;
 
 import com.twittzel.Hassan.ui.Activity.DownloadActivity;
 
+import java.util.Objects;
+
 public class WorkForNotify extends Worker {
     private final String mChannelName = "notification_Download";
     int i = 0;
@@ -45,9 +47,9 @@ public class WorkForNotify extends Worker {
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, mChannelName);
         builder.setContentTitle(id)
-                .setContentText(context.getResources().getString(R.string.Quality) + ": " + quality +
-                        "\n " + context.getResources().getString(R.string.Size) + " = " + size)
+                .setContentText(context.getResources().getString(R.string.Quality) + ":" + quality +
+                        "__" + context.getResources().getString(R.string.Size) + "=" + size)
                 .setSmallIcon(R.drawable.pic_main_twittzel);
-        manager.notify(1, builder.build());
+        Objects.requireNonNull(manager).notify(1, builder.build());
     }
 }

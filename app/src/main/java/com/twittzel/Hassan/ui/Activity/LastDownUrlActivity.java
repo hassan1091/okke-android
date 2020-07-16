@@ -20,7 +20,6 @@ import com.twittzel.Hassan.adapters.LR_Adapter;
 import com.twittzel.Hassan.data.ExtraContext;
 import com.twittzel.Hassan.data.database.DatabaseForAdapter;
 import com.twittzel.Hassan.data.database.LastUrlList;
-import com.twittzel.Hassan.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +70,7 @@ public class LastDownUrlActivity extends AppCompatActivity {
         // use a linear layout manager
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //بدء حدث حيما  يتم النقر على الزر
-        lr_adapter = new LR_Adapter(urlLists, new OnItemClickListener() {
+        lr_adapter = new LR_Adapter(urlLists, new LR_Adapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(int position, List<LastUrlList> lastUserUrlArray) {
                 //اخذ الرابط المختار وارساله الى MainActivity

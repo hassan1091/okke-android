@@ -18,4 +18,5 @@
     <string name="szie_api" translatable="false">szie</string>
     <string name="Quality_api" translatable="false">Quality</string>
     <string name="home">home</string>
+    <string name="link_is_wrong">Link is wrong</string>
 </resources>

@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.Activity.DownloadActivity"/>
+        <activity android:name=".ui.Activity.DownloadActivity" />
         <activity android:name=".ui.Activity.AboutUsActivity" />
         <activity android:name=".ui.Activity.LastDownUrlActivity" />
         <activity android:name=".ui.Activity.MainActivity">

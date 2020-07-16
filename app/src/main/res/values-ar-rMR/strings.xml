@@ -13,4 +13,5 @@
     <string name="Add_the_link">اضف الرابط</string>
     <string name="download">التحميل</string>
     <string name="home">الصفحة الرئيسية</string>
+    <string name="link_is_wrong">خطأ في الرابط</string>
 </resources>

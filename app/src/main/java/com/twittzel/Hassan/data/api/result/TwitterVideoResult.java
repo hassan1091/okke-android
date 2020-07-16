@@ -1,28 +1,28 @@
 
 package com.twittzel.Hassan.data.api.result;
-
+import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
-
+import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TwitterVideoResult implements Parcelable
-{
+public class TwitterVideoResult implements Parcelable{
 
-    @SerializedName("id")
-    @Expose
+
+
     private String id;
-    @SerializedName("statusCode")
-    @Expose
+
     private int statusCode;
-    @SerializedName("data")
-    @Expose
-    private List<Datum> data = null;
-    public final static Creator<TwitterVideoResult> CREATOR = new Creator<TwitterVideoResult>() {
+
+    private List<Datum> data = new ArrayList<>();
+    public final static Parcelable.Creator<TwitterVideoResult> CREATOR = new Creator<TwitterVideoResult>() {
 
 
+        @SuppressWarnings({
+                "unchecked"
+        })
         public TwitterVideoResult createFromParcel(Parcel in) {
             return new TwitterVideoResult(in);
         }
@@ -32,7 +32,7 @@ public class TwitterVideoResult implements Parcelable
         }
 
     }
-    ;
+            ;
 
     protected TwitterVideoResult(Parcel in) {
         this.id = ((String) in.readValue((String.class.getClassLoader())));
@@ -74,7 +74,7 @@ public class TwitterVideoResult implements Parcelable
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

@@ -18,7 +18,6 @@ import com.twittzel.Hassan.R;
 
 public class AboutUsActivity extends AppCompatActivity {
 
-
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,7 +9,9 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -35,15 +37,19 @@ import com.twittzel.Hassan.data.api.result.TwitterVideoResult;
 import com.twittzel.Hassan.data.database.DatabaseForAdapter;
 import com.twittzel.Hassan.data.database.LastUrlList;
 
+import java.util.Objects;
+
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity {
     //العنصر الذي تم اختياره من قائمة القوائم الاسبقة
     public static final int CODE_LDU = 114;
-    private DatabaseForAdapter databaseForAdapter;
     private String mUserUrl;
+
     private EditText editText;
     private ProgressBar mProgressBar;
+
+    private DatabaseForAdapter databaseForAdapter;
     public InterstitialAd mInterstitialAd;
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -68,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     //جلب البيانات اذا تم مشاركة الفيديو من تويتر
     private void displayGetFromTWT() {
-        if (!getUrlFromTwt().equals("")) editText.setText(getUrlFromTwt());
+        if (!TextUtils.isEmpty(getUrlFromTwt())) editText.setText(getUrlFromTwt());
     }
 
     //اعلان قوقل
@@ -114,19 +120,19 @@ public class MainActivity extends AppCompatActivity {
     //موقع زر حمل
     public void bTForDownload(View view) {
         //التأكد من وجود الانترنت
-        if (!editText.getText().toString().isEmpty()) {
-            if (isNetworkAvailable()) {
-                mProgressBar.setVisibility(View.VISIBLE);
-                //تشغيل API
-                //   displayApiTwitte();
-                displayTwitterApi();
-            } else {
-                mProgressBar.setVisibility(View.GONE);
-                Toast.makeText(this, getResources().getString(R.string.You_do_not_have_internet_please_try_again_later), LENGTH_SHORT).show();
-            }
-        } else {
+        if (editText.getText().toString().isEmpty()) {
             Toast.makeText(this, getResources().getString(R.string.Add_the_link), Toast.LENGTH_LONG).show();
+            return;
         }
+        if (isNetworkAvailable()) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            //تشغيل API
+            displayTwitterApi();
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+            Toast.makeText(this, getResources().getString(R.string.You_do_not_have_internet_please_try_again_later), LENGTH_SHORT).show();
+        }
+
     }
 
     // تفعيل api
@@ -134,14 +140,21 @@ public class MainActivity extends AppCompatActivity {
         mUserUrl = String.valueOf(editText.getText());
         new Api().getTwitterVideoResult(mUserUrl).enqueue(new retrofit2.Callback<TwitterVideoResult>() {
             @Override
-            public void onResponse(@NonNull retrofit2.Call<TwitterVideoResult> call, @NonNull retrofit2.Response<TwitterVideoResult> response) {
+            public void onResponse(@NonNull retrofit2.Call<TwitterVideoResult> call, @NonNull final retrofit2.Response<TwitterVideoResult> response) {
                 if (response.isSuccessful()) {
                     //ارسال الرابط الى قائمة اخر ما حمل
                     addUrlToDataBase();
-                    //فتح صفحة التحميل 
-                    Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
-                    intent.putExtra(ExtraContext.TWITTER_DATA, response.body());
+                    //فتح صفحة التحميل
+                    if (Objects.requireNonNull(response.body()).getStatusCode() != 200) return;
                     Log.e("response ", "isSuccessful");
+                    AppExecutor.getInstance().getMainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
+                            intent.putExtra(ExtraContext.TWITTER_DATA, response.body());
+                            startActivity(intent);
+                        }
+                    });
                 } else Log.e("response ", "!isSuccessful");
                 mProgressBar.setVisibility(View.GONE);
             }
@@ -153,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     // استقبال الرابط من تويتر
     public String getUrlFromTwt() {
         String theTwtUrl = "";
@@ -202,7 +216,6 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
         }
     }
 
@@ -217,5 +230,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    private static boolean isUrl(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.WEB_URL.matcher(target).matches());
+    }
 }

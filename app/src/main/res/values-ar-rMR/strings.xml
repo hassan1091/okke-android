@@ -5,13 +5,23 @@
     <string name="Size">الحجم</string>
     <string name="TWITTZEL">تويتزل</string>
     <string name="Download_Now">حمل الان</string>
-    <string name="Last_Urls">الروابط السابقة</string>
+    <string name="last_urls">الروابط السابقة</string>
     <string name="Put_the_link_here"> ضع الرابط هنا . . </string>
     <string name="You_do_not_have_internet_please_try_again_later">ليس لديك انترنت ارجو المحاولة لاحقا</string>
     <string name="Who_are_we">"من نحن "</string>
-    <string name="about_us_description">شركة نحن نوجهك البرمجية أسست عام 2019 في شهر مايو. حيث نقدم خدمات برمجية. ونحن بمجموعة من الشباب الطموحيين.وهذا التطبيق قد طور بواسطة حسن الخليف و واصل المهري</string>
+    <string name="about_us_description">من نحن  شركة نحن نوجهك البرمجية أسست عام 2019 في شهر مايو. حيث نقدم خدمات برمجية. ونحن بمجموعة من الشباب الطموحيين.وهذا التطبيق قد طور بواسطة حسن الخليف و واصل المهري</string>
     <string name="Add_the_link">اضف الرابط</string>
     <string name="download">التحميل</string>
     <string name="home">الصفحة الرئيسية</string>
     <string name="link_is_wrong">خطأ في الرابط</string>
+    <string name="Open">افتح</string>
+    <string name="Close">اغلق</string>
+    <string name="theme">سمة</string>
+    <string name="day_night_mode">الوضع ليلي/نهاري</string>
+    <string name="twitter">تويتر</string>
+    <string name="linked_in">لينكد ان</string>
+    <string name="our_web_site">موقعنا</string>
+    <string name="help_us_by">ساعدنا بـ</string>
+    <string name="share">النشر</string>
+    <string name="rate_us">التقييم</string>
 </resources>

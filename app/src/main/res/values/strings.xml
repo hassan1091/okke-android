@@ -5,11 +5,11 @@
     <string name="Size">Size</string>
     <string name="TWITTZEL">TWITTZEL</string>
     <string name="Download_Now">Download now</string>
-    <string name="Last_Urls">Last urls</string>
+    <string name="last_urls">Last urls</string>
     <string name="Put_the_link_here">Put the link here. . .</string>
     <string name="You_do_not_have_internet_please_try_again_later">You do not have internet, please try again later</string>
     <string name="Who_are_we">"About Us "</string>
-    <string name="about_us_description">The nhn nawjhak  software company, founded in 2019 in May,starting with website services, a simple group of Arab ambitious young people, to become a company with a promising title and a promising future.And this app, developed by Hassan Al-Khelaif and Wasel Al Mahri.</string>
+    <string name="about_us_description">About us The nhn nawjhak  software company, founded in 2019 in May,starting with website services, a simple group of Arab ambitious young people, to become a company with a promising title and a promising future.And this app, developed by Hassan Al-Khelaif and Wasel Al Mahri.</string>
     <string name="Add_the_link">add the link</string>
     <string name="download">Download</string>
     <string name="data_api" translatable="false">data</string>
@@ -19,4 +19,21 @@
     <string name="Quality_api" translatable="false">Quality</string>
     <string name="home">home</string>
     <string name="link_is_wrong">Link is wrong</string>
+    <string name="title_activity_navigaetion_main" translatable="false">NavigaetionMainActivity</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="theme">theme</string>
+    <string name="day_night_mode">day Night mode</string>
+    <string name="twitter">twitter</string>
+    <string name="linked_in">linkedIn</string>
+    <string name="our_web_site">Our Website</string>
+    <string name="our_email" translatable="false">admin@nahn.tech</string>
+    <string name="help_us_by">help us by</string>
+    <string name="share">Share</string>
+    <string name="rate_us">Rate us</string>
 </resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/theme">
+        <menu>
+            <item
+                android:id="@+id/action_day"
+                android:icon="@drawable/ic_brightness_medium_black_24dp"
+                android:title="@string/day_night_mode" />
+        </menu>
+    </item>
+    <item android:title="@string/Who_are_we">
+        <menu>
+            <item
+                android:id="@+id/action_our_twitter"
+                android:icon="@drawable/ic_twitter_svg"
+                android:title="@string/twitter" />
+            <item
+                android:id="@+id/action_our_linked_in"
+                android:icon="@drawable/ic_linkedin_svg"
+                android:title="@string/linked_in" />
+            <item
+                android:id="@+id/action_our_website"
+                android:icon="@drawable/ic_www"
+                android:title="@string/our_web_site" />
+            <item
+                android:id="@+id/action_our_email"
+                android:icon="@drawable/ic_email_svg"
+                android:title="@string/our_email" />
+        </menu>
+    </item>
+    <item android:title="@string/help_us_by">
+        <menu>
+            <item
+                android:id="@+id/action_share"
+                android:icon="@drawable/ic_share"
+                android:title="@string/share" />
+            <item
+                android:id="@+id/action_rate_us"
+                android:icon="@drawable/ic_rate_review"
+                android:title="@string/rate_us" />
+        </menu>
+    </item>
+</menu>

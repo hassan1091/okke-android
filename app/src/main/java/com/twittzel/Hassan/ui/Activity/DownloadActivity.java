@@ -24,19 +24,15 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.twittzel.Hassan.AboutUs;
 import com.twittzel.Hassan.R;
 import com.twittzel.Hassan.WorkForNotify;
 import com.twittzel.Hassan.adapters.DownLoadTwitterAdapter;
 import com.twittzel.Hassan.data.ExtraContext;
-import com.twittzel.Hassan.data.api.Api;
 import com.twittzel.Hassan.data.api.result.Datum;
 import com.twittzel.Hassan.data.api.result.TwitterVideoResult;
 
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DownloadActivity extends AppCompatActivity {
     public static final String KEY_TWT_ID = "KEY_TWT_ID";
@@ -129,7 +125,7 @@ public class DownloadActivity extends AppCompatActivity {
 
     //تشغيل صفحة من نحن
     public void displayToAboutUs(View view) {
-        startActivity(new Intent(this, com.twittzel.Hassan.ui.Activity.AboutUsActivity.class));
+        startActivity(new Intent(this, AboutUs.class));
     }
 
 

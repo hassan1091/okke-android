@@ -10,14 +10,23 @@ public class LastUrlList {
     @PrimaryKey(autoGenerate = true)
     public int id;
     @ColumnInfo(name = "urls")
-    public String mLRDownList;
+    public String lastDownLoadUrl;
 
+    public String filePath;
 
-    public String getmLRDownList() {
-        return mLRDownList;
+    public String getLastDownLoadUrl() {
+        return lastDownLoadUrl;
     }
 
-    public void setmLRDownList(String mLRDownList) {
-        this.mLRDownList = mLRDownList;
+    public void setLastDownLoadUrl(String lastDownLoadUrl) {
+        this.lastDownLoadUrl = lastDownLoadUrl;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

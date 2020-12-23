@@ -6,19 +6,19 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <TextView
-        android:id="@+id/headTextView"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/headColor"
-        android:gravity="center"
-        android:text="@string/last_urls"
-        android:textColor="@color/white_text"
-        android:textSize="35sp"
-        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/last_urls"
+        app:titleTextColor="@android:color/white"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -27,8 +27,8 @@
         android:layout_marginTop="8dp"
         tools:listitem="@layout/item_last_down_url"
         app:layout_constraintBottom_toTopOf="@+id/adView"
-        app:layout_constraintTop_toBottomOf="@+id/headTextView"
-        tools:context=".ui.Activity.LastDownUrlActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:context=".Activity.LastDownUrlActivity" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

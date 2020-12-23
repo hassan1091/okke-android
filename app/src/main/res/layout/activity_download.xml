@@ -5,52 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ui.Activity.DownloadActivity">
+    tools:context=".Activity.DownloadActivity">
 
-    <TextView
-        android:id="@+id/headTextView"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/headColor"
-        android:gravity="center"
-        android:text="@string/download"
-        android:textColor="#ffff"
-        android:textSize="35sp"
-        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/pic_header_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:background="#00D81B60"
-        android:onClick="displayToAboutUs"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_menu_black_24dp" />
+        app:title="@string/download"
+        app:titleTextColor="@android:color/white"
+        />
 
     <WebView
         android:id="@+id/videoView"
         android:layout_width="300dp"
         android:layout_height="250dp"
-        android:foregroundGravity="center"
         android:layout_marginTop="16dp"
+        android:foregroundGravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -72,6 +51,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/back_bt"
             tools:itemCount="3"
             tools:listitem="@layout/item_download" />
 

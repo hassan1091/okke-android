@@ -1,4 +1,4 @@
-package com.twittzel.Hassan.ui.Activity;
+package com.twittzel.Hassan.Activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -44,8 +44,6 @@ import com.twittzel.Hassan.R;
 import com.twittzel.Hassan.data.ExtraContext;
 import com.twittzel.Hassan.data.api.Api;
 import com.twittzel.Hassan.data.api.result.TwitterVideoResult;
-import com.twittzel.Hassan.data.database.DatabaseForAdapter;
-import com.twittzel.Hassan.data.database.LastUrlList;
 
 import java.util.Objects;
 
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private EditText editText;
     private ProgressBar mProgressBar;
 
-    private DatabaseForAdapter databaseForAdapter;
+
     public InterstitialAd mInterstitialAd;
 
     private DrawerLayout drawerLayout;
@@ -72,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
-        databaseForAdapter = DatabaseForAdapter.getsInstance(this);
         editText = findViewById(R.id.E1);
         mProgressBar = findViewById(R.id.progressBar);
 
@@ -127,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-4200825572816870/1251621628");
         mInterstitialAd.loadAd(adRequest);
+
     }
 
     @Override
@@ -149,20 +147,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this
                 , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this
+                , new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
     }
 
     //موقع زر حمل
     public void bTForDownload(View view) {
-        //التأكد من وجود الانترنت
+        view.setVisibility(View.INVISIBLE);
         if (editText.getText().toString().isEmpty()) {
+            view.setVisibility(View.VISIBLE);
             Toast.makeText(this, getResources().getString(R.string.Add_the_link), Toast.LENGTH_LONG).show();
             return;
         }
+        //التأكد من وجود الانترنت
         if (isNetworkAvailable()) {
             mProgressBar.setVisibility(View.VISIBLE);
             //تشغيل API
-            displayTwitterApi();
+            displayTwitterApi(view);
         } else {
+            view.setVisibility(View.INVISIBLE);
             mProgressBar.setVisibility(View.GONE);
             Toast.makeText(this, getResources().getString(R.string.You_do_not_have_internet_please_try_again_later), LENGTH_SHORT).show();
         }
@@ -170,14 +175,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     // تفعيل api
-    private void displayTwitterApi() {
+    private void displayTwitterApi(final View view) {
         mUserUrl = String.valueOf(editText.getText());
         new Api().getTwitterVideoResult(mUserUrl).enqueue(new retrofit2.Callback<TwitterVideoResult>() {
             @Override
             public void onResponse(@NonNull retrofit2.Call<TwitterVideoResult> call, @NonNull final retrofit2.Response<TwitterVideoResult> response) {
                 if (response.isSuccessful()) {
-                    //ارسال الرابط الى قائمة اخر ما حمل
-                    addUrlToDataBase();
                     //فتح صفحة التحميل
                     if (Objects.requireNonNull(response.body()).getStatusCode() != 200) return;
                     Log.e("response ", "isSuccessful");
@@ -186,7 +189,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         public void run() {
                             Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
                             intent.putExtra(ExtraContext.TWITTER_DATA, response.body());
+                            intent.putExtra(ExtraContext.THIS_URL, mUserUrl);
                             startActivity(intent);
+                            view.setVisibility(View.VISIBLE);
                         }
                     });
                 } else Log.e("response ", "!isSuccessful");
@@ -257,17 +262,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
         }
-    }
-
-    private void addUrlToDataBase() {
-        AppExecutor.getInstance().getDiskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                LastUrlList urlList = new LastUrlList();
-                urlList.setmLRDownList(mUserUrl);
-                databaseForAdapter.lastUrlDaw().InsertUrl(urlList);
-            }
-        });
     }
 
     //<a target="_blank" href="https://icons8.com/icons/set/paste">Paste icon</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>

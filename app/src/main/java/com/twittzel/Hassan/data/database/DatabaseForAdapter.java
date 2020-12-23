@@ -2,11 +2,14 @@ package com.twittzel.Hassan.data.database;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {LastUrlList.class}, version = 1, exportSchema = false)
+@Database(entities = {LastUrlList.class}, version = 3, exportSchema = false)
 public abstract class DatabaseForAdapter extends RoomDatabase {
     private static Object LACK = new Object();
     private static DatabaseForAdapter sInstance;
@@ -18,7 +21,7 @@ public abstract class DatabaseForAdapter extends RoomDatabase {
                 if (sInstance == null) {
                     sInstance = Room.databaseBuilder(
                             context.getApplicationContext(), DatabaseForAdapter.class, DATABASE_NAME
-                    ).build();
+                    ).fallbackToDestructiveMigration().build();
                 }
             }
         }
@@ -26,5 +29,6 @@ public abstract class DatabaseForAdapter extends RoomDatabase {
     }
 
     public abstract LastUrlDaw lastUrlDaw();
+
 
 }

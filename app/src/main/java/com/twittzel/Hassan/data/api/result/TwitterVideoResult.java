@@ -1,15 +1,12 @@
-
 package com.twittzel.Hassan.data.api.result;
-import java.util.ArrayList;
-import java.util.List;
+
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
-public class TwitterVideoResult implements Parcelable{
+import java.util.ArrayList;
+import java.util.List;
 
+public class TwitterVideoResult implements Parcelable {
 
 
     private String id;
@@ -31,8 +28,7 @@ public class TwitterVideoResult implements Parcelable{
             return (new TwitterVideoResult[size]);
         }
 
-    }
-            ;
+    };
 
     protected TwitterVideoResult(Parcel in) {
         this.id = ((String) in.readValue((String.class.getClassLoader())));

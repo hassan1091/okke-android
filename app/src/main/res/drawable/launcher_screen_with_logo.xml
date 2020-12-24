@@ -9,7 +9,7 @@
         <!--This logo is 144x144 px. If your image is larger, you should scale it to fit nicely-->
         <bitmap
             android:gravity="center"
-            android:src="@drawable/pic_main_twittzel" />
+            android:src="@drawable/no_frame_twittzel" />
     </item>
 
 </layer-list>

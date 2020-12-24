@@ -1,13 +1,9 @@
-
 package com.twittzel.Hassan.data.api.result;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
-public class Datum implements Parcelable{
+public class Datum implements Parcelable {
 
     private String url;
 
@@ -25,8 +21,7 @@ public class Datum implements Parcelable{
             return (new Datum[size]);
         }
 
-    }
-    ;
+    };
 
     protected Datum(Parcel in) {
         this.url = ((String) in.readValue((String.class.getClassLoader())));
@@ -68,7 +63,7 @@ public class Datum implements Parcelable{
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

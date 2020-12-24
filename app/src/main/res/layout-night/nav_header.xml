@@ -11,9 +11,9 @@
         android:id="@+id/imageView3"
         android:layout_width="180dp"
         android:layout_height="130dp"
-        android:layout_marginTop="32dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/no_frame_twittzel"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/main_twittzel_png"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

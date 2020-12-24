@@ -48,7 +48,7 @@ public class WorkForNotify extends Worker {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, mChannelName);
         builder.setContentTitle(id)
                 .setContentText(context.getResources().getString(R.string.Size) + "=" + size)
-                .setSmallIcon(R.drawable.pic_main_twittzel);
+                .setSmallIcon(R.mipmap.ic_twittzel_three);
         Objects.requireNonNull(manager).notify(1, builder.build());
     }
 }

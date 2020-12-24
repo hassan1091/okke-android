@@ -40,7 +40,6 @@ import com.twittzel.Hassan.data.database.LastUrlList;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.Objects;
 
 public class DownloadActivity extends AppCompatActivity {
@@ -62,7 +61,7 @@ public class DownloadActivity extends AppCompatActivity {
             System.out.println("DownloadActivity On Receive");
             final DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             Uri uri = downloadManager.getUriForDownloadedFile(mId);
-            if(uri != null) {
+            if (uri != null) {
                 System.out.println("DownloadActivity FILE URI " + uri.getPath());
                 String filePath = getRealPathFromURI(DownloadActivity.this, uri);
                 System.out.println("DownloadActivity FILE PATH " + filePath);
@@ -206,7 +205,6 @@ public class DownloadActivity extends AppCompatActivity {
 
 
     }
-
 
 
 }

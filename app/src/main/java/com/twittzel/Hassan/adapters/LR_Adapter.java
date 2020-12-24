@@ -3,7 +3,6 @@ package com.twittzel.Hassan.adapters;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +25,10 @@ public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {
     public interface OnItemClickListener {
         void onItemClickListener(int position, List<LastUrlList> lastUserUrlArray);
     }
+
     List<LastUrlList> lastUserUrlArray;
     OnItemClickListener onItemClickListener;
+
     public LR_Adapter(List<LastUrlList> lastUserUrlArray, OnItemClickListener onItemClickListener) {
         this.lastUserUrlArray = lastUserUrlArray;
         this.onItemClickListener = onItemClickListener;
@@ -64,7 +65,7 @@ public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {
             textView = itemView.findViewById(R.id.BottomCapy);
             shareImageView = itemView.findViewById(R.id.image_view_share);
             videoView = itemView.findViewById(R.id.videoView);
-            constraintLayout =itemView.findViewById(R.id.constraint_layout);
+            constraintLayout = itemView.findViewById(R.id.constraint_layout);
           /*  itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -75,7 +76,7 @@ public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {
 
         public void bind(LastUrlList lastUrlList) {
             File f = new File(lastUrlList.getFilePath());
-            if (!f.exists()){
+            if (!f.exists()) {
                 constraintLayout.setVisibility(View.GONE);
                 return;
             }

@@ -194,7 +194,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             view.setVisibility(View.VISIBLE);
                         }
                     });
-                } else Log.e("response ", "!isSuccessful");
+                } else {
+                    view.setVisibility(View.VISIBLE);
+                    Log.e("response ", "!isSuccessful");
+                }
                 mProgressBar.setVisibility(View.GONE);
             }
 

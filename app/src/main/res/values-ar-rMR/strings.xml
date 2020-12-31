@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">تويتزل</string>
     <string name="Quality">الدقة</string>
     <string name="Size">الحجم</string>
     <string name="TWITTZEL">تويتزل</string>

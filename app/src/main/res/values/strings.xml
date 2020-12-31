@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TWITTZEL</string>
+    <string name="app_name" translatable="false">Twittzel</string>
     <string name="sizeShape" translatable="false">125dp</string>
     <string name="Quality">Quality</string>
     <string name="Size">Size</string>

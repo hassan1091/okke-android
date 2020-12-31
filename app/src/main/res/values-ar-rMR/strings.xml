@@ -2,7 +2,6 @@
 <resources>
     <string name="Quality">الدقة</string>
     <string name="Size">الحجم</string>
-    <string name="TWITTZEL">تويتزل</string>
     <string name="Download_Now">حمل الان</string>
     <string name="last_urls">الروابط السابقة</string>
     <string name="Put_the_link_here"> ضع الرابط هنا . . </string>

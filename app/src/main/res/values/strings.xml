@@ -3,7 +3,7 @@
     <string name="sizeShape" translatable="false">125dp</string>
     <string name="Quality">Quality</string>
     <string name="Size">Size</string>
-    <string name="TWITTZEL">TWITTZEL</string>
+    <string name="TWITTZEL" translatable="false">Twittzel</string>
     <string name="Download_Now">Download now</string>
     <string name="last_urls">Last urls</string>
     <string name="Put_the_link_here">Put the link here. . .</string>

@@ -36,4 +36,5 @@
     <string name="help_us_by">help us by</string>
     <string name="share">Share</string>
     <string name="rate_us">Rate us</string>
+    <string name="twittzel_plus" translatable="false">Twittzel plus</string>
 </resources>

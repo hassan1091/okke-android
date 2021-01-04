@@ -311,6 +311,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.action_rate_us:
                 rateUs();
                 break;
+            case R.id.action_our_new_app:
+                startActivity(AboutUs.downLoadTwittzelPlus());
+                break;
         }
         return true;
     }

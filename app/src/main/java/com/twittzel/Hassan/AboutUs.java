@@ -42,4 +42,9 @@ public class AboutUs {
         Intent.createChooser(sendIntent, "Share via");
         return sendIntent;
     }
+    // فتح تحميل تطبيق تويتزل بلس
+    public static Intent downLoadTwittzelPlus() {
+        String twittzelPlus = "https://www.linkedin.com/company/%D9%86%D8%AD%D9%86-%D9%86%D9%88%D8%AC%D9%87%D9%83";
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(twittzelPlus));
+    }
 }

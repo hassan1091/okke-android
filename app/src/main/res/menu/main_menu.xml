@@ -38,6 +38,12 @@
                 android:id="@+id/action_rate_us"
                 android:icon="@drawable/ic_rate_review"
                 android:title="@string/rate_us" />
+            <item
+                android:id="@+id/action_our_new_app"
+                android:icon="@drawable/ic_app_store"
+                android:title="@string/twittzel_plus"
+                />
         </menu>
+
     </item>
 </menu>

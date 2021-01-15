@@ -23,11 +23,11 @@ import java.util.List;
 
 public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {
     public interface OnItemClickListener {
-        void onItemClickListener(int position, List<LastUrlList> lastUserUrlArray);
+        void onItemClickListener(LastUrlList lastUrlList);
     }
 
-    List<LastUrlList> lastUserUrlArray;
-    OnItemClickListener onItemClickListener;
+    private List<LastUrlList> lastUserUrlArray;
+    private OnItemClickListener onItemClickListener;
 
     public LR_Adapter(List<LastUrlList> lastUserUrlArray, OnItemClickListener onItemClickListener) {
         this.lastUserUrlArray = lastUserUrlArray;
@@ -39,7 +39,7 @@ public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {
     public LR_viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_last_down_url, parent, false);
-        return new LR_viewHolder(view, onItemClickListener, lastUserUrlArray);
+        return new LR_viewHolder(view, onItemClickListener);
     }
 
     @Override
@@ -53,41 +53,34 @@ public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {
     }
 
     static class LR_viewHolder extends RecyclerView.ViewHolder {
-        Uri uri;
+        private LastUrlList lastUrlList;
         private TextView textView;
         private ImageView shareImageView;
         private VideoView videoView;
         private ConstraintLayout constraintLayout;
 
-        public LR_viewHolder(@NonNull View itemView, final OnItemClickListener onItemClickListener, final List<LastUrlList> lastUserUrlArray) {
+        public LR_viewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
 
+            getViews();
+
+            getListener(onItemClickListener);
+        }
+
+        private void getViews() {
             textView = itemView.findViewById(R.id.BottomCapy);
             shareImageView = itemView.findViewById(R.id.image_view_share);
             videoView = itemView.findViewById(R.id.videoView);
             constraintLayout = itemView.findViewById(R.id.constraint_layout);
-          /*  itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onItemClickListener.onItemClickListener(getAdapterPosition(), lastUserUrlArray);
-                }
-            });*/
         }
 
-        public void bind(LastUrlList lastUrlList) {
-            File f = new File(lastUrlList.getFilePath());
-            if (!f.exists()) {
-                constraintLayout.setVisibility(View.GONE);
-                return;
-            }
-            constraintLayout.setVisibility(View.VISIBLE);
-            uri = Uri.parse(lastUrlList.getFilePath());
-            textView.setText(lastUrlList.getLastDownLoadUrl());
-
-            videoView.setVideoURI(uri);
-            videoView.setMediaController(new MediaController(itemView.getContext()));
-
-
+        private void getListener(final OnItemClickListener onItemClickListener) {
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClickListener(lastUrlList);
+                }
+            });
             shareImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -96,11 +89,24 @@ public class LR_Adapter extends RecyclerView.Adapter<LR_Adapter.LR_viewHolder> {
             });
         }
 
+        private void bind(LastUrlList lastUrlList) {
+            this.lastUrlList = lastUrlList;
+            File f = new File(lastUrlList.getFilePath());
+            if (!f.exists()) {
+                constraintLayout.setVisibility(View.GONE);
+                return;
+            }
+            constraintLayout.setVisibility(View.VISIBLE);
+            textView.setText(lastUrlList.getLastDownLoadUrl());
+            videoView.setVideoURI(Uri.parse(lastUrlList.getFilePath()));
+            videoView.setMediaController(new MediaController(itemView.getContext()));
+        }
+
         private void shareVideo() {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("video/*");
             sharingIntent.putExtra(Intent.EXTRA_SUBJECT, itemView.getContext().getString(R.string.app_name));
-            sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(lastUrlList.getFilePath()));
             itemView.getContext().startActivity(Intent.createChooser(sharingIntent, "Share Video"));
         }
     }

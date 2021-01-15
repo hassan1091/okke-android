@@ -22,6 +22,7 @@ import com.twittzel.Hassan.data.database.DatabaseForAdapter;
 import com.twittzel.Hassan.data.database.LastUrlList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LastDownUrlActivity extends AppCompatActivity {
@@ -75,10 +76,10 @@ public class LastDownUrlActivity extends AppCompatActivity {
         //بدء حدث حيما  يتم النقر على الزر
         lr_adapter = new LR_Adapter(urlLists, new LR_Adapter.OnItemClickListener() {
             @Override
-            public void onItemClickListener(int position, List<LastUrlList> lastUserUrlArray) {
+            public void onItemClickListener(LastUrlList lastUrlList) {
                 //اخذ الرابط المختار وارساله الى MainActivity
                 Intent intent = new Intent();
-                intent.putExtra(ExtraContext.THIS_URL, lastUserUrlArray.get(position).getLastDownLoadUrl());
+                intent.putExtra(ExtraContext.THIS_URL, lastUrlList.getLastDownLoadUrl());
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -103,6 +104,8 @@ public class LastDownUrlActivity extends AppCompatActivity {
             urlLists.clear();
             //وضع جميع الروابط داخل متغير
             urlLists.addAll(lastUrlLists);
+            //
+            Collections.reverse(urlLists);
             //فتح Thread للتعامل مع الواجهة
             LastDownUrlActivity.this.runOnUiThread(new Runnable() {
                 @Override

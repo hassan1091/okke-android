@@ -1,6 +1,7 @@
 package com.twittzel.Hassan.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -12,7 +13,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -23,6 +26,7 @@ import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import com.github.pierry.simpletoast.SimpleToast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -38,8 +42,6 @@ import com.twittzel.Hassan.data.api.result.TwitterVideoResult;
 import com.twittzel.Hassan.data.database.DatabaseForAdapter;
 import com.twittzel.Hassan.data.database.LastUrlList;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
 
 public class DownloadActivity extends AppCompatActivity {
@@ -47,13 +49,15 @@ public class DownloadActivity extends AppCompatActivity {
     public static final String KEY_SIZE = "KEY_SIZE";
 
     private String mUserUrl;
+    private long mId;
 
     private TwitterVideoResult twitterVideoResult = new TwitterVideoResult();
 
+
     private DatabaseForAdapter databaseForAdapter;
 
-    private long mId;
-    private Datum mDatum;
+    private Dialog settingsDialogMid;
+    private Dialog settingsDialogEnd;
 
     final BroadcastReceiver onDownloadCompleteReceiver = new BroadcastReceiver() {
         @Override
@@ -65,7 +69,15 @@ public class DownloadActivity extends AppCompatActivity {
                 System.out.println("DownloadActivity FILE URI " + uri.getPath());
                 String filePath = getRealPathFromURI(DownloadActivity.this, uri);
                 System.out.println("DownloadActivity FILE PATH " + filePath);
-                addUrlToDataBase(mDatum, filePath);
+                addUrlToDataBase(filePath);
+                showFinishedDownload();
+            } else {
+                if (settingsDialogMid.isShowing()) {
+                    SimpleToast.error(DownloadActivity.this, getString(R.string.error_in_downloading));
+                    settingsDialogMid.setCanceledOnTouchOutside(true);
+                    settingsDialogMid.cancel();
+                }
+
             }
         }
     };
@@ -88,7 +100,7 @@ public class DownloadActivity extends AppCompatActivity {
         twitterVideoResult = getIntent().getParcelableExtra(ExtraContext.TWITTER_DATA);
         mUserUrl = getIntent().getStringExtra(ExtraContext.THIS_URL);
         // تشغيل الرابط على الواجهة
-        if (twitterVideoResult == null) return;
+        if (twitterVideoResult == null) finish();
         displayUrl(Objects.requireNonNull(twitterVideoResult).getData().get(0).getUrl());
         // وضع البيانات في adapter
         DownLoadTwitterAdapter downLoadTwitterAdapter = new DownLoadTwitterAdapter(twitterVideoResult.getData(), new DownLoadTwitterAdapter.OnDownLoadTwitterItemClickListener() {
@@ -105,12 +117,41 @@ public class DownloadActivity extends AppCompatActivity {
 
         registerReceiver(onDownloadCompleteReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
+        setSettingsDialog();
+
     }
 
     @Override
     protected void onDestroy() {
         unregisterReceiver(onDownloadCompleteReceiver);
         super.onDestroy();
+    }
+
+    private void setSettingsDialog() {
+        settingsDialogMid = new Dialog(this);
+        settingsDialogEnd = new Dialog(this);
+        Objects.requireNonNull(settingsDialogMid.getWindow()).requestFeature(Window.FEATURE_NO_TITLE);
+        Objects.requireNonNull(settingsDialogEnd.getWindow()).requestFeature(Window.FEATURE_NO_TITLE);
+        settingsDialogMid.setContentView(getLayoutInflater().inflate(R.layout.layout_download_mid, null));
+        settingsDialogEnd.setContentView(getLayoutInflater().inflate(R.layout.layout_download_end, null));
+        settingsDialogMid.setCanceledOnTouchOutside(false);
+        settingsDialogEnd.setCanceledOnTouchOutside(true);
+    }
+
+
+    private void showFinishedDownload() {
+        if (settingsDialogMid.isShowing())
+            settingsDialogMid.cancel();
+        settingsDialogEnd.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (settingsDialogEnd.isShowing())
+                    settingsDialogEnd.cancel();
+                startActivity(new Intent(DownloadActivity.this, LastDownUrlActivity.class));
+                finish();
+            }
+        }, 500);
     }
 
     //تشغيل اعلانات قوقل بانر.
@@ -143,7 +184,6 @@ public class DownloadActivity extends AppCompatActivity {
 
     //اوامر التحميل
     public void displayDownloadVideoAndNotify(final Datum datum) {
-        mDatum = datum;
         String fileName = System.currentTimeMillis() + "t.mp4";
         DownloadManager.Request downLoadRequest = new DownloadManager.Request(Uri.parse(datum.getUrl()));
         downLoadRequest.setTitle(fileName);
@@ -152,12 +192,14 @@ public class DownloadActivity extends AppCompatActivity {
         final DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         if (downloadManager != null) {
             mId = downloadManager.enqueue(downLoadRequest);
+            if (mId != 0) settingsDialogMid.show();
+        } else {
+            if (settingsDialogMid.isShowing())
+                settingsDialogMid.cancel();
         }
-
-
         //اوامر اظهار الاشعار
         Data data = new Data.Builder()
-                .putString(KEY_TWT_ID, twitterVideoResult.getId())
+                .putString(KEY_TWT_ID, fileName)
                 .putString(KEY_SIZE, datum.getSzie())
                 .build();
         OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(WorkForNotify.class)
@@ -192,7 +234,7 @@ public class DownloadActivity extends AppCompatActivity {
         return result;
     }
 
-    private void addUrlToDataBase(@NotNull Datum datum, final String filePath) {
+    private void addUrlToDataBase(final String filePath) {
         AppExecutor.getInstance().getDiskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -202,9 +244,5 @@ public class DownloadActivity extends AppCompatActivity {
                 databaseForAdapter.lastUrlDaw().InsertUrl(urlList);
             }
         });
-
-
     }
-
-
 }

@@ -22,4 +22,5 @@
     <string name="help_us_by">ساعدنا بـ</string>
     <string name="share">النشر</string>
     <string name="rate_us">التقييم</string>
+    <string name="error_in_downloading">خطا في التنزيل حاول مجددا</string>
 </resources>

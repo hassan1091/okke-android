@@ -37,4 +37,5 @@
     <string name="share">Share</string>
     <string name="rate_us">Rate us</string>
     <string name="twittzel_plus" translatable="false">Twittzel plus</string>
+    <string name="error_in_downloading">error in downloading please try again</string>
 </resources>
